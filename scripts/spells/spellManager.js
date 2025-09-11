@@ -56,7 +56,8 @@ class SpellManager {
      * @public
      */
     drawSpells() {
-        this.spells.forEach(spell => this.spellRenderer.drawSpell(spell));
+        const sortedSpells = [...this.spells].sort((a, b) => (a.zIndex || 0) - (b.zIndex || 0));
+        sortedSpells.forEach(spell => this.spellRenderer.drawSpell(spell));
     }
 
     /**

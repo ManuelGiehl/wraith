@@ -164,11 +164,13 @@ class SpellCaster {
      * @returns {Object} Boss lightning spell data
      */
     createBossLightning() {
-        const bossY = this.game.bossSystem.boss.y;
+        const boss = this.game.bossSystem.boss;
+        const bossCenterX = boss.x + boss.spriteWidth / 2;
+        const bossY = boss.y;
         
         return {
-            x: 200,
-            y: bossY + 50,
+            x: bossCenterX - 100,
+            y: bossY + 80, 
             width: 150,
             height: 100,
             velocityX: 0,
@@ -181,9 +183,9 @@ class SpellCaster {
             isUltimate: true,
             isLightning: true,
             isBossLightning: true,
-            zIndex: 1000,
-            targetX: 200,
-            targetY: bossY + 50,
+            zIndex: 2000,
+            targetX: bossCenterX - 100,
+            targetY: bossY + 80,
             lightningPhase: 'hovering',
             strikeDelay: 20,
             hasHit: false,
