@@ -1,19 +1,13 @@
 /**
  * Mobile Canvas Management - Handles responsive canvas setup and iOS fullscreen
- * @class
  */
 class MobileCanvas {
-    /**
-     * Creates an instance of MobileCanvas
-     * @param {Game} game - The main game instance
-     */
     constructor(game) {
         this.game = game;
     }
 
     /**
      * Sets up responsive canvas for mobile devices
-     * @public
      */
     setupResponsiveCanvas() {
         const canvas = this.game.canvas;
@@ -27,7 +21,6 @@ class MobileCanvas {
 
     /**
      * Enables fullscreen mode
-     * @public
      */
     enableFullscreen() {
         this.setupFullscreenCSS();
@@ -37,7 +30,6 @@ class MobileCanvas {
 
     /**
      * Sets up fullscreen CSS
-     * @private
      */
     setupFullscreenCSS() {
         document.body.style.margin = '0';
@@ -48,7 +40,6 @@ class MobileCanvas {
 
     /**
      * Sets up iOS Safari fullscreen
-     * @private
      */
     setupIOSFullscreen() {
         this.setupStatusBarMeta();
@@ -59,7 +50,6 @@ class MobileCanvas {
 
     /**
      * Sets up status bar meta tag
-     * @private
      */
     setupStatusBarMeta() {
         let statusBar = document.querySelector('meta[name="apple-mobile-web-app-status-bar-style"]');
@@ -73,7 +63,6 @@ class MobileCanvas {
 
     /**
      * Sets up web app meta tag
-     * @private
      */
     setupWebAppMeta() {
         let webApp = document.querySelector('meta[name="mobile-web-app-capable"]');
@@ -87,7 +76,6 @@ class MobileCanvas {
 
     /**
      * Sets up legacy web app meta tag
-     * @private
      */
     setupLegacyWebAppMeta() {
         let legacyWebApp = document.querySelector('meta[name="apple-mobile-web-app-capable"]');
@@ -101,7 +89,6 @@ class MobileCanvas {
 
     /**
      * Adjusts viewport meta tag
-     * @private
      */
     adjustViewport() {
         let viewport = document.querySelector('meta[name="viewport"]');
@@ -112,7 +99,6 @@ class MobileCanvas {
 
     /**
      * Sets up canvas styling
-     * @private
      */
     setupCanvasStyling(canvas) {
         canvas.style.width = '100%';
@@ -123,7 +109,6 @@ class MobileCanvas {
 
     /**
      * Sets up container styling
-     * @private
      */
     setupContainerStyling(container) {
         if (container) {
@@ -135,7 +120,6 @@ class MobileCanvas {
 
     /**
      * Ensures viewport meta tag exists
-     * @private
      */
     ensureViewportMeta() {
         let viewport = document.querySelector('meta[name="viewport"]');
@@ -149,7 +133,6 @@ class MobileCanvas {
 
     /**
      * Creates enter button
-     * @private
      */
     createEnterButton() {
         const enterBtn = this.createEnterButtonElement();
@@ -159,12 +142,19 @@ class MobileCanvas {
 
     /**
      * Creates enter button element
-     * @private
      */
     createEnterButtonElement() {
         const enterBtn = document.createElement('button');
         enterBtn.id = 'enter-btn';
-        enterBtn.innerHTML = '↵ Enter';
+        enterBtn.innerHTML = '↵';
+        this.setupEnterButtonStyling(enterBtn);
+        return enterBtn;
+    }
+
+    /**
+     * Sets up enter button styling
+     */
+    setupEnterButtonStyling(enterBtn) {
         enterBtn.style.cssText = `
             position: fixed;
             top: 20px;
@@ -184,14 +174,20 @@ class MobileCanvas {
             align-items: center;
             justify-content: center;
         `;
-        return enterBtn;
     }
 
     /**
      * Sets up enter button events
-     * @private
      */
     setupEnterButtonEvents(enterBtn) {
+        this.setupEnterButtonClickEvent(enterBtn);
+        this.setupEnterButtonTouchEvent(enterBtn);
+    }
+
+    /**
+     * Sets up enter button click event
+     */
+    setupEnterButtonClickEvent(enterBtn) {
         enterBtn.addEventListener('click', (e) => {
             if (this.game.isPaused) {
                 this.game.eventHandler.handlePauseButtonClick();
@@ -199,7 +195,12 @@ class MobileCanvas {
             }
             this.handleEnterPress();
         });
-        
+    }
+
+    /**
+     * Sets up enter button touch event
+     */
+    setupEnterButtonTouchEvent(enterBtn) {
         enterBtn.addEventListener('touchstart', (e) => {
             e.preventDefault();
             if (this.game.isPaused) {
@@ -213,11 +214,16 @@ class MobileCanvas {
 
     /**
      * Handles enter press
-     * @private
      */
     handleEnterPress() {
         const event = { code: 'Enter' };
-        
+        this.routeEnterEvent(event);
+    }
+
+    /**
+     * Routes enter event to appropriate system
+     */
+    routeEnterEvent(event) {
         if (this.game.startScreenSystem.isVisible) {
             this.game.startScreenSystem.handleKeyDown(event);
         } else if (this.game.endScreenSystem.isVisible) {
@@ -231,7 +237,6 @@ class MobileCanvas {
 
     /**
      * Handles pause key down
-     * @private
      */
     handlePauseKeyDown(e) {
         if (e.code === 'Escape') {
@@ -242,9 +247,16 @@ class MobileCanvas {
 
     /**
      * Requests fullscreen mode
-     * @public
      */
     requestFullscreen() {
+        this.attemptFullscreenRequest();
+        this.hideStatusBar();
+    }
+
+    /**
+     * Attempts to request fullscreen
+     */
+    attemptFullscreenRequest() {
         if (document.documentElement.webkitRequestFullscreen) {
             document.documentElement.webkitRequestFullscreen();
         } else if (document.documentElement.requestFullscreen) {
@@ -254,15 +266,20 @@ class MobileCanvas {
         } else if (document.documentElement.msRequestFullscreen) {
             document.documentElement.msRequestFullscreen();
         }
-        
-        this.hideStatusBar();
     }
 
     /**
      * Hides status bar (iOS)
-     * @private
      */
     hideStatusBar() {
+        this.setupStatusBarForFullscreen();
+        this.updateViewportForFullscreen();
+    }
+
+    /**
+     * Sets up status bar for fullscreen
+     */
+    setupStatusBarForFullscreen() {
         let statusBar = document.querySelector('meta[name="apple-mobile-web-app-status-bar-style"]');
         if (!statusBar) {
             statusBar = document.createElement('meta');
@@ -270,7 +287,12 @@ class MobileCanvas {
             document.head.appendChild(statusBar);
         }
         statusBar.content = 'black-translucent';
-        
+    }
+
+    /**
+     * Updates viewport for fullscreen
+     */
+    updateViewportForFullscreen() {
         let viewport = document.querySelector('meta[name="viewport"]');
         if (viewport) {
             viewport.content = 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover';
@@ -279,7 +301,6 @@ class MobileCanvas {
 
     /**
      * Resizes canvas to fit screen
-     * @public
      */
     resizeCanvas() {
         const canvas = this.game.canvas;
@@ -293,46 +314,75 @@ class MobileCanvas {
 
     /**
      * Calculates canvas dimensions
-     * @private
      */
     calculateCanvasDimensions() {
         const availableWidth = window.innerWidth;
         const availableHeight = window.innerHeight;
+        const realHeight = this.calculateRealHeight(availableHeight);
+        const scale = this.calculateScale(availableWidth, realHeight);
         
+        return { originalWidth: 1280, originalHeight: 720, scale };
+    }
+
+    /**
+     * Calculates real height for iOS Safari
+     */
+    calculateRealHeight(availableHeight) {
         const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
         const isSafari = /Safari/.test(navigator.userAgent) && !/Chrome/.test(navigator.userAgent);
         
-        let realHeight = availableHeight;
         if (isIOS && isSafari) {
-            realHeight = window.screen.height;
+            return window.screen.height;
         }
-        
+        return availableHeight;
+    }
+
+    /**
+     * Calculates scale factor
+     */
+    calculateScale(availableWidth, realHeight) {
         const originalWidth = 1280;
         const originalHeight = 720;
         
         const scaleX = availableWidth / originalWidth;
         const scaleY = realHeight / originalHeight;
-        const scale = Math.min(scaleX, scaleY);
-        
-        return { originalWidth, originalHeight, scale };
+        return Math.min(scaleX, scaleY);
     }
 
     /**
      * Applies canvas dimensions
-     * @private
      */
     applyCanvasDimensions(canvas, dimensions) {
         const { originalWidth, originalHeight, scale } = dimensions;
         
-        canvas.width = originalWidth;
-        canvas.height = originalHeight;
-        
-        this.game.width = originalWidth;
-        this.game.height = originalHeight;
+        this.setCanvasSize(canvas, originalWidth, originalHeight);
+        this.updateGameDimensions(originalWidth, originalHeight, scale);
+        this.setCanvasStyling(canvas, originalWidth, originalHeight, scale);
+    }
+
+    /**
+     * Sets canvas size
+     */
+    setCanvasSize(canvas, width, height) {
+        canvas.width = width;
+        canvas.height = height;
+    }
+
+    /**
+     * Updates game dimensions
+     */
+    updateGameDimensions(width, height, scale) {
+        this.game.width = width;
+        this.game.height = height;
         this.game.scale = scale;
-        
-        canvas.style.width = `${originalWidth * scale}px`;
-        canvas.style.height = `${originalHeight * scale}px`;
+    }
+
+    /**
+     * Sets canvas styling
+     */
+    setCanvasStyling(canvas, width, height, scale) {
+        canvas.style.width = `${width * scale}px`;
+        canvas.style.height = `${height * scale}px`;
         canvas.style.position = 'absolute';
         canvas.style.top = '50%';
         canvas.style.left = '50%';

@@ -64,7 +64,7 @@ class MobileControls {
         spacer.style.flex = '1';
         container.appendChild(spacer);
         
-        this.touchControls.jump = this.createTouchButton('jump', '↑', 'jump');
+        this.touchControls.jump = this.createTouchButton('jump', 'J', 'jump');
         this.touchControls.jump.style.backgroundColor = 'rgba(0, 123, 255, 0.8)';
         container.appendChild(this.touchControls.jump);
         
