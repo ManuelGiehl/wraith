@@ -11,9 +11,8 @@ class SoundEffectsSystem {
     constructor(game) {
         this.game = game;
         this.soundEffects = new Map();
-        this.sfxVolume = 0.4; // 40% default SFX volume
+        this.sfxVolume = 0.4;
         this.muted = false;
-        
         this.initializeSoundEffects();
     }
     
@@ -76,7 +75,7 @@ class SoundEffectsSystem {
     setSoundVolume(sound, soundName) {
         const volume = typeof this.sfxVolume === 'number' && !isNaN(this.sfxVolume) && isFinite(this.sfxVolume) 
             ? this.sfxVolume 
-            : 0.4; // 40% default fallback 
+            : 0.4;
         
         if (soundName === 'click') {
             sound.volume = volume * 0.3;
@@ -104,10 +103,9 @@ class SoundEffectsSystem {
      * @param {number} volume - Volume level (0-1)
      */
     setVolume(volume) {
-        // Ensure volume is a valid number
         if (typeof volume !== 'number' || isNaN(volume) || !isFinite(volume)) {
             console.warn('Invalid volume value provided to SoundEffectsSystem:', volume);
-            volume = 0.4; // 40% default fallback
+            volume = 0.4;
         }
         this.sfxVolume = Math.max(0, Math.min(1, volume));
     }
@@ -137,7 +135,6 @@ class SoundEffectsSystem {
                 : 0.4; 
             
             let finalVolume = baseVolume;
-            
             if (soundName === 'click') {
                 finalVolume = baseVolume * 0.3;
             } else if (soundName === 'ultimatelightning') {
@@ -145,7 +142,6 @@ class SoundEffectsSystem {
             }
             
             finalVolume *= volumeMultiplier;
-            
             sound.volume = finalVolume;
             sound.currentTime = 0;
             sound.play().catch(() => {});
@@ -196,7 +192,5 @@ class SoundEffectsSystem {
      * Updates the sound effects system
      * @public
      */
-    update() {
-        // Update logic if needed
-    }
+    update() {}
 }
