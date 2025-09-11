@@ -46,19 +46,15 @@ class EventHandler {
             this.game.startScreenSystem.handleKeyDown(e);
             return;
         }
-
         if (this.game.endScreenSystem.isVisible) {
             this.game.endScreenSystem.handleKeyDown(e);
             return;
         }
-
         if (this.game.gameOverScreenSystem.isVisible) {
             this.game.gameOverScreenSystem.handleKeyDown(e);
             return;
-        }
-            
-        this.game.wraithSystem.handleKeyDown(e);
-        
+        }     
+        this.game.wraithSystem.handleKeyDown(e); 
         if (e.code === 'F2') {
             this.game.bossRoomSystem.spawnDirectlyInBossRoom();
         }
@@ -158,11 +154,9 @@ class EventHandler {
             clientX = e.touches[0].clientX;
             clientY = e.touches[0].clientY;
         } else {
-            // Mouse event
             clientX = e.clientX;
             clientY = e.clientY;
-        }
-        
+        }  
         return {
             x: clientX - rect.left,
             y: clientY - rect.top
@@ -220,17 +214,13 @@ class EventHandler {
      */
     resetToMainMenu() {
         this.game.isPaused = false;
-        this.game.startScreenSystem.resetAndShow();
-        
+        this.game.startScreenSystem.resetAndShow(); 
         this.game.score = 0;
         this.game.gameOver = false;
         this.game.ultimateCastId = 0;
-        
         this.game.endScreenSystem.hide();
-        this.game.gameOverScreenSystem.hide();
-        
+        this.game.gameOverScreenSystem.hide();  
         this.game.rainSystem.setEnabled(true);
-        // WICHTIG: Bossraum-Flag zurücksetzen
         this.game.bossRoomSystem.inBossRoom = false;
         this.game.bossRoomSystem.enteringBossRoom = false;
         

@@ -112,26 +112,62 @@ class WraithDrawing {
         const animation = this.player.currentAnimation;
         
         if (animation === 'walking') {
-            return {
-                src: `models/img/wraith/PNG/Wraith_01/PNG_Sequences/Walking/Wraith_01_Moving_Forward_${this.player.currentFrame.toString().padStart(3, '0')}.png`,
-                frame: this.player.currentFrame
-            };
+            return this.getWalkingImageData();
         } else if (animation === 'jumping') {
-            return {
-                src: `models/img/wraith/PNG/Wraith_01/PNG_Sequences/Taunt/Wraith_01_Taunt_${this.player.jumpFrame.toString().padStart(3, '0')}.png`,
-                frame: this.player.jumpFrame
-            };
+            return this.getJumpingImageData();
         } else if (animation === 'idleBlink') {
-            return {
-                src: `models/img/wraith/PNG/Wraith_01/PNG_Sequences/Idle_Blink/Wraith_01_Idle_Blinking_${this.player.blinkFrame.toString().padStart(3, '0')}.png`,
-                frame: this.player.blinkFrame
-            };
+            return this.getIdleBlinkImageData();
         } else {
-            return {
-                src: `models/img/wraith/PNG/Wraith_01/PNG_Sequences/Idle/Wraith_01_Idle_${this.player.currentFrame.toString().padStart(3, '0')}.png`,
-                frame: this.player.currentFrame
-            };
+            return this.getIdleImageData();
         }
+    }
+
+    /**
+     * Gets walking image data
+     * @private
+     * @returns {Object} Image data
+     */
+    getWalkingImageData() {
+        return {
+            src: `models/img/wraith/PNG/Wraith_01/PNG_Sequences/Walking/Wraith_01_Moving_Forward_${this.player.currentFrame.toString().padStart(3, '0')}.png`,
+            frame: this.player.currentFrame
+        };
+    }
+
+    /**
+     * Gets jumping image data
+     * @private
+     * @returns {Object} Image data
+     */
+    getJumpingImageData() {
+        return {
+            src: `models/img/wraith/PNG/Wraith_01/PNG_Sequences/Taunt/Wraith_01_Taunt_${this.player.jumpFrame.toString().padStart(3, '0')}.png`,
+            frame: this.player.jumpFrame
+        };
+    }
+
+    /**
+     * Gets idle blink image data
+     * @private
+     * @returns {Object} Image data
+     */
+    getIdleBlinkImageData() {
+        return {
+            src: `models/img/wraith/PNG/Wraith_01/PNG_Sequences/Idle_Blink/Wraith_01_Idle_Blinking_${this.player.blinkFrame.toString().padStart(3, '0')}.png`,
+            frame: this.player.blinkFrame
+        };
+    }
+
+    /**
+     * Gets idle image data
+     * @private
+     * @returns {Object} Image data
+     */
+    getIdleImageData() {
+        return {
+            src: `models/img/wraith/PNG/Wraith_01/PNG_Sequences/Idle/Wraith_01_Idle_${this.player.currentFrame.toString().padStart(3, '0')}.png`,
+            frame: this.player.currentFrame
+        };
     }
 
     /**
@@ -269,32 +305,4 @@ class WraithDrawing {
         };
     }
 
-    /**
-     * Draws wraith debug info (hitbox)
-     * @public
-     * @param {Object} screenPos - Screen position
-     */
-    drawWraithDebugInfo(screenPos) {
-        const hitboxWidth = this.player.hitboxWidth || 30;
-        const hitboxHeight = this.player.hitboxHeight || 40;
-        
-        const hitboxX = screenPos.x + (this.player.width - hitboxWidth) / 2;
-        const hitboxY = screenPos.y + (this.player.height - hitboxHeight) / 2;
-        
-        this.game.ctx.strokeStyle = '#00ffff';
-        this.game.ctx.lineWidth = 4;
-        this.game.ctx.setLineDash([8, 4]);
-        this.game.ctx.strokeRect(hitboxX, hitboxY, hitboxWidth, hitboxHeight);
-        this.game.ctx.setLineDash([]);
-        
-        this.game.ctx.fillStyle = 'rgba(0, 255, 255, 0.2)';
-        this.game.ctx.fillRect(hitboxX, hitboxY, hitboxWidth, hitboxHeight);
-        
-        this.game.ctx.fillStyle = '#00ffff';
-        this.game.ctx.font = 'bold 14px Arial';
-        this.game.ctx.strokeStyle = '#000000';
-        this.game.ctx.lineWidth = 2;
-        this.game.ctx.strokeText('WRAITH HITBOX', hitboxX, hitboxY - 8);
-        this.game.ctx.fillText('WRAITH HITBOX', hitboxX, hitboxY - 8);
-    }
 }
