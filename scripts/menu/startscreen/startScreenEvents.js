@@ -103,8 +103,7 @@ class StartScreenEvents {
         if (isHoveringButton) {
             this.startScreen.hoveredStartButton = true;
         }
-        
-        // Set cursor style based on hover state
+
         this.setCursor(isHoveringButton ? 'pointer' : 'default');
     }
 
@@ -164,14 +163,12 @@ class StartScreenEvents {
         if (this.startScreen.showGameTooltip) {
             this.handleGameTooltipClick(mouseX, mouseY);
             return;
-        }
-        
+        } 
         if (this.startScreen.showAudio && this.startScreen.game.audioSystem) {
             if (this.startScreen.game.audioSystem.handleAudioClick(mouseX, mouseY)) {
                 return;
             }
         }
-        
         if (!this.startScreen.showControls && !this.startScreen.showAudio && !this.startScreen.showImpressum && !this.startScreen.showGameTooltip) {
             this.handleMenuClick();
         }
