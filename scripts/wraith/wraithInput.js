@@ -59,6 +59,7 @@ class WraithInput {
             this.player.velocityX = -this.player.speed;
             this.player.facingRight = false;
             this.player.currentAnimation = 'walking';
+            this.player.hasMoved = true;
         }
     }
 
@@ -71,6 +72,7 @@ class WraithInput {
             this.player.velocityX = this.player.speed;
             this.player.facingRight = true;
             this.player.currentAnimation = 'walking';
+            this.player.hasMoved = true;
         }
     }
 
