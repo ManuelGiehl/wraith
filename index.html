@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wraith</title>
+    <link rel="icon" type="image/png" sizes="64x64" href="models/img/fav/favwraith.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cossette+Texte:wght@400;700&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style/global.css">
+    <link rel="stylesheet" href="style/mobile.css">
+    <favicon src="models/img/fav/favwraith.png"></favicon>
+    <!-- All Game Modules -->
+    <script src="scripts/collisions/collision.js"defer></script>
+    <script src="scripts/boss/crystal.js"defer></script>
+    <script src="scripts/boss/bossroom.js"defer></script>
+    <script src="scripts/boss/bossattacks.js"defer></script>
+    <script src="scripts/boss/bossAnimation.js"defer></script>
+    <script src="scripts/boss/bossAI.js"defer></script>
+    <script src="scripts/boss/bossState.js"defer></script>
+    <script src="scripts/boss/bossRendering.js"defer></script>
+    <script src="scripts/boss/boss.js"defer></script>
+    <script src="scripts/camera/kamera.js"defer></script>
+    <script src="scripts/golem/golem.js"defer></script>
+    <!-- Wraith Modules -->
+    <script src="scripts/wraith/wraithInput.js"defer></script>
+    <script src="scripts/wraith/wraithAnimation.js"defer></script>
+    <script src="scripts/wraith/wraithDrawing.js"defer></script>
+    <script src="scripts/wraith/wraithPhysics.js"defer></script>
+    <script src="scripts/wraith/wraithSystem.js"defer></script>
+    <!-- Spell Modules -->
+    <script src="scripts/spells/spellUpdater.js"defer></script>
+    <script src="scripts/spells/spellCaster.js"defer></script>
+    <script src="scripts/spells/spellRenderer.js"defer></script>
+    <script src="scripts/spells/spellManager.js"defer></script>
+    <script src="scripts/consumables/potions/potion.js"defer></script>
+    <script src="scripts/rain/rain.js"defer></script>
+    <script src="scripts/menu/startscreen/moon.js"defer></script>
+    <script src="scripts/audio/soundeffects.js"defer></script>
+    <script src="scripts/audio/audio.js"defer></script>
+    <script src="scripts/audio/backgroundmusic.js"defer></script>
+    <!-- Start Screen Modules -->
+    <script src="scripts/menu/startscreen/startScreenEvents.js"defer></script>
+    <script src="scripts/menu/startscreen/startScreenIntro.js"defer></script>
+    <script src="scripts/menu/startscreen/startScreenRenderer.js"defer></script>
+    <script src="scripts/menu/startscreen/startScreenSystem.js"defer></script>
+    <script src="scripts/menu/endscreen/endScreen.js"defer></script>
+    <script src="scripts/menu/gameover/gameOverScreen.js"defer></script>
+    <!-- UI Modules -->
+    <script src="scripts/ui/uiHealthBar.js"defer></script>
+    <script src="scripts/ui/uiScore.js"defer></script>
+    <script src="scripts/ui/uiCrystal.js"defer></script>
+    <script src="scripts/ui/uiFeedback.js"defer></script>
+    <script src="scripts/ui/uiSystem.js"defer></script>
+    <!-- Mobile Module -->
+    <script src="scripts/mobile/mobileCanvas.js"defer></script>
+    <script src="scripts/mobile/mobileControls.js"defer></script>
+    <script src="scripts/mobile/mobileOrientation.js"defer></script>
+    <script src="scripts/mobile/mobileEvents.js"defer></script>
+    <script src="scripts/mobile/mobileSystem.js"defer></script>
+    
+    <!--Modular systems -->
+    <script src="scripts/world/imageLoader.js"defer></script>
+    <script src="scripts/world/eventHandler.js"defer></script>
+    <script src="scripts/world/gameRenderer.js"defer></script>
+    <script src="scripts/world/gameUpdater.js"defer></script>
+    
+    <!-- Template Modules -->
+    <script src="scripts/text/textRenderer.js"defer></script>
+    <script src="scripts/menu/menurendering/menuRenderer.js"defer></script>
+    <script src="scripts/ui/uiRenderer.js"defer></script>
+    <script src="scripts/menu/background/layerRenderer.js"defer></script>
+    <script src="scripts/ui/mainclass/templateManager.js"defer></script>
+    
+    <script src="scripts/main/main.js"defer></script>
+</head>
+<body>
+    <div id="gameContainer">
+        <canvas id="gameCanvas" width="1280" height="720"></canvas>
+        <div id="ui">
+            <div id="healthBar">
+                <div id="healthFill"></div>
+            </div>
+            <div id="score">Score: 0</div>
+        </div>
+        <div id="gameOverScreen" class="hidden">
+            <h2>Game Over!</h2>
+            <p>Score: <span id="finalScore">0</span></p>
+            <button id="restartBtn">Neustart</button>
+        </div>
+    </div>
+    
+    
+</body>
+</html>
