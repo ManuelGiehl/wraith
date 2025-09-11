@@ -1,9 +1,3 @@
-/**
- * Mobile-Styles für Touch-Controls und Mobile-Optimierung
- * Implementiert User Story 1: Mobile-Geräte Support
- */
-
-/* Vollbild-Modus */
 html, body {
     margin: 0;
     padding: 0;
@@ -18,7 +12,6 @@ html, body {
     bottom: 0;
 }
 
-/* iOS Safari Vollbild */
 @supports (-webkit-touch-callout: none) {
     html, body {
         height: -webkit-fill-available;
@@ -31,7 +24,6 @@ html, body {
     }
 }
 
-/* Mobile Container */
 #gameContainer {
     position: fixed;
     top: 0;
@@ -42,7 +34,6 @@ html, body {
 
 }
 
-/* Mobile Canvas */
 #gameCanvas {
     position: absolute;
     top: 50%;
@@ -52,7 +43,6 @@ html, body {
     max-height: 100vh;
 }
 
-/* Mobile Controls Container */
 .mobile-controls {
     position: fixed;
     bottom: 20px;
@@ -70,7 +60,6 @@ html, body {
     gap: 10px;
 }
 
-/* Mobile Buttons */
 .mobile-button {
     width: 50px;
     height: 50px;
@@ -104,7 +93,6 @@ html, body {
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
 }
 
-/* Spezifische Button-Styles */
 .mobile-left {
     order: 1;
 }
@@ -143,7 +131,6 @@ html, body {
     background: rgba(255, 215, 0, 0.4);
 }
 
-/* Portrait Warning */
 .portrait-warning {
     position: fixed;
     top: 0;
@@ -183,13 +170,11 @@ html, body {
     opacity: 0.9;
 }
 
-/* Animation für Portrait Icon */
 @keyframes rotate {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
 }
 
-/* Responsive Design */
 @media (max-width: 768px) {
     .mobile-controls {
         height: 100px;
@@ -234,7 +219,6 @@ html, body {
     }
 }
 
-/* Extra small screens */
 @media (max-width: 360px) {
     .mobile-controls {
         height: 70px;
@@ -249,14 +233,12 @@ html, body {
     }
 }
 
-/* Verstecke Mobile Controls auf Desktop */
 @media (min-width: 1600px) {
     .mobile-controls {
         display: none !important;
     }
 }
 
-/* Mobile D-Pad */
 .mobile-dpad {
     position: relative;
     width: 120px;
@@ -264,7 +246,6 @@ html, body {
     pointer-events: auto;
 }
 
-/* Responsive D-Pad */
 @media (max-width: 768px) {
     .mobile-dpad {
         width: 90px;
@@ -335,7 +316,6 @@ html, body {
     transform: scale(0.95);
 }
 
-/* Responsive D-Pad Buttons */
 @media (max-width: 768px) {
     .dpad-button {
         width: 40px;
@@ -368,7 +348,6 @@ html, body {
     }
 }
 
-/* Touch-spezifische Optimierungen */
 @media (hover: none) and (pointer: coarse) {
     .mobile-button, .dpad-button {
         -webkit-tap-highlight-color: transparent;
