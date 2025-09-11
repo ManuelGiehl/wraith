@@ -449,11 +449,13 @@ class UIRenderer {
         TextRenderer.drawCenteredText(ctx, 'IMPRINT', centerX, centerY - 150, '36px', 'Raleway', '#ffffff', 'bold');
         TextRenderer.drawCenteredText(ctx, 'Wraith - A 2D Action Game', centerX, centerY - 100, '20px', 'Raleway', '#ffffff', 'bold');
         TextRenderer.drawCenteredText(ctx, 'Developed with JavaScript & HTML5 Canvas', centerX, centerY - 70, '16px');
-        TextRenderer.drawCenteredText(ctx, 'Graphics: Free Assets', centerX, centerY - 50, '16px');
-        TextRenderer.drawCenteredText(ctx, 'Music: Free Sounds', centerX, centerY - 30, '16px');
-        TextRenderer.drawCenteredText(ctx, '© 2025 - Developed for the Developerakademie', centerX, centerY - 10, '16px');
-        TextRenderer.drawCenteredText(ctx, 'Version 1.0', centerX, centerY + 20, '18px', 'Raleway', '#ffffff', 'bold');
-        TextRenderer.drawCenteredText(ctx, 'Build: 2025.01', centerX, centerY + 45, '18px', 'Raleway', '#ffffff', 'bold');
+        TextRenderer.drawCenteredText(ctx, 'by Manuel Giehl', centerX, centerY - 50, '16px');
+        
+        TextRenderer.drawCenteredText(ctx, 'Graphics: Free Assets', centerX, centerY - 10, '16px');
+        TextRenderer.drawCenteredText(ctx, 'Music: Free Sounds', centerX, centerY + 10, '16px');
+        TextRenderer.drawCenteredText(ctx, '© 2025 - Developed for the Developerakademie', centerX, centerY + 30, '16px');
+        TextRenderer.drawCenteredText(ctx, 'Version 1.0', centerX, centerY + 50, '18px', 'Raleway', '#ffffff', 'bold');
+        TextRenderer.drawCenteredText(ctx, 'Build: 2025.01', centerX, centerY + 75, '18px', 'Raleway', '#ffffff', 'bold');
         TextRenderer.drawCenteredText(ctx, 'ESC - Back to Main Menu', centerX, height - 50, '16px', 'Raleway', '#cccccc');
     }
 }
