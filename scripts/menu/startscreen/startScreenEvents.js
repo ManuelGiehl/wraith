@@ -204,7 +204,7 @@ class StartScreenEvents {
             this.startScreen.showControls = false;
             this.startScreen.showAudio = false;
             this.startScreen.showImpressum = false;
-            this.startScreen.selectedOption = 0;
+            this.startScreen.selectedOption = -1;
         }
     }
 
