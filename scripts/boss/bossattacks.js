@@ -122,7 +122,6 @@ class BossAttacks {
             frameTime: 2,
             frameCount: 0
         };
-        
         this.bossSystem.lightnings.push(lightning);
     }
 
@@ -242,7 +241,6 @@ class BossAttacks {
      */
     drawFireballDebugInfo(ctx, fireball) {
         if (!ctx) return;
-
         ctx.strokeStyle = '#ff8800';
         ctx.lineWidth = 2;
         ctx.strokeRect(fireball.x, fireball.y, fireball.width, fireball.height);
