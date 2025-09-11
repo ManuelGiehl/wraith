@@ -40,7 +40,6 @@ class BackgroundMusicSystem {
      */
     setupUserInteractionListener() {
         const events = ['click', 'keydown', 'touchstart', 'mousedown'];
-        
         const handleUserInteraction = () => {
             if (!this.userHasInteracted) {
                 this.userHasInteracted = true;
@@ -71,8 +70,7 @@ class BackgroundMusicSystem {
                 this.executePlay();
                 return;
             }
-            
-            // Try to play immediately (start muted)
+
             this.backgroundMusic.muted = true;
             const playPromise = this.backgroundMusic.play();
             
@@ -81,7 +79,6 @@ class BackgroundMusicSystem {
                     this.isPlaying = true;
                     this.isPaused = false;
                     this.autoplayBlocked = false;
-                    // Immediately unmute
                     this.backgroundMusic.muted = false;
                 }).catch(e => {
                     this.autoplayBlocked = true;
@@ -170,7 +167,6 @@ class BackgroundMusicSystem {
     setVolume(volume) {
         this.volume = Math.max(0, Math.min(1, volume));
         if (this.backgroundMusic) {
-            // For very low values (under 0.01 = 1%) completely mute
             const actualVolume = (this.volume < 0.01) ? 0 : this.volume;
             this.backgroundMusic.volume = this.muted ? 0 : actualVolume;
         }
@@ -182,28 +178,22 @@ class BackgroundMusicSystem {
     setMuted(muted) {
         this.muted = muted;
         if (this.backgroundMusic) {
-            // For very low values (under 0.01 = 1%) completely mute
             const actualVolume = (this.volume < 0.01) ? 0 : this.volume;
             this.backgroundMusic.volume = this.muted ? 0 : actualVolume;
-            // Also set the muted attribute
             this.backgroundMusic.muted = this.muted;
         }
         
-        // Pause music when muted
         if (muted && this.isPlaying) {
             this.pause();
         }
-        // Start/resume music when unmuted
         else if (!muted) {
             if (this.isPaused) {
                 this.resume();
             } else if (!this.isPlaying) {
-                // Start music if it has never been played
                 this.play();
             }
         }
-        
-        // Reset pending play when muted
+ 
         if (muted) {
             this.pendingPlay = false;
         }
