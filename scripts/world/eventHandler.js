@@ -237,9 +237,5 @@ class EventHandler {
         if (this.game.backgroundMusicSystem) {
             this.game.backgroundMusicSystem.play();
         }
-        
-        if (this.game.mobileSystem && this.game.mobileSystem.getIsMobile()) {
-            this.game.mobileSystem.getMobileControls().setPauseButtonVisible(false);
-        }
     }
 }

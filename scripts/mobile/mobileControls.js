@@ -233,7 +233,7 @@ class MobileControls {
         this.touchControls.pause.style.border = '2px solid #4a90e2';
         this.touchControls.pause.style.borderRadius = '8px';
         this.touchControls.pause.style.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.3)';
-        this.touchControls.pause.style.display = 'none';
+        this.touchControls.pause.style.display = 'block'; // Always visible
         this.touchControls.pause.style.zIndex = '1001'; 
         document.body.appendChild(this.touchControls.pause);
     }
@@ -256,16 +256,6 @@ class MobileControls {
         document.body.appendChild(warning);
     }
 
-    /**
-     * Shows or hides the pause button
-     * @public
-     * @param {boolean} show - Whether to show the pause button
-     */
-    setPauseButtonVisible(show) {
-        if (this.touchControls.pause) {
-            this.touchControls.pause.style.display = show ? 'block' : 'none';
-        }
-    }
 
     /**
      * Gets touch controls

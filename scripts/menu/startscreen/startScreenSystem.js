@@ -199,11 +199,6 @@ class StartScreenSystem {
         // WICHTIG: Bossraum-Flag zurücksetzen
         this.game.bossRoomSystem.inBossRoom = false;
         this.game.bossRoomSystem.enteringBossRoom = false;
-        
-        // Hide pause button on mobile when returning to start screen
-        if (this.game.mobileSystem && this.game.mobileSystem.getIsMobile()) {
-            this.game.mobileSystem.getMobileControls().setPauseButtonVisible(false);
-        }
         this.selectedOption = 0;
     }
 

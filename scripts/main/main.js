@@ -137,10 +137,6 @@ class Game {
         this.uiSystem.updateUI();
         this.uiSystem.hideGameOver();
         this.cameraSystem.resetToPlayer();
-        
-        if (this.mobileSystem && this.mobileSystem.getIsMobile()) {
-            this.mobileSystem.getMobileControls().setPauseButtonVisible(true);
-        }
     }
 
     /**
