@@ -20,6 +20,7 @@ class StartScreenEvents {
     setupCloseButtonEvents() {
         const closeControlsBtn = document.getElementById('closeControlsBtn');
         const closeAudioBtn = document.getElementById('closeAudioBtn');
+        const closeImpressumBtn = document.getElementById('closeImpressumBtn');
         
         if (closeControlsBtn) {
             closeControlsBtn.addEventListener('click', () => {
@@ -30,6 +31,12 @@ class StartScreenEvents {
         if (closeAudioBtn) {
             closeAudioBtn.addEventListener('click', () => {
                 this.startScreen.closeModal('audio');
+            });
+        }
+        
+        if (closeImpressumBtn) {
+            closeImpressumBtn.addEventListener('click', () => {
+                this.startScreen.closeModal('impressum');
             });
         }
     }

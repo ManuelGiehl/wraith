@@ -130,6 +130,7 @@ class StartScreenSystem {
                 break;
             case 3:
                 this.showImpressum = true;
+                this.showCloseButton('impressum');
                 this.selectedOption = -1;
                 break;
         }
@@ -221,7 +222,7 @@ class StartScreenSystem {
     /**
      * Shows close button for specific modal
      * @public
-     * @param {string} type - Type of modal ('controls' or 'audio')
+     * @param {string} type - Type of modal ('controls', 'audio', or 'impressum')
      */
     showCloseButton(type) {
         const buttonId = `close${type.charAt(0).toUpperCase() + type.slice(1)}Btn`;
@@ -234,7 +235,7 @@ class StartScreenSystem {
     /**
      * Hides close button for specific modal
      * @public
-     * @param {string} type - Type of modal ('controls' or 'audio')
+     * @param {string} type - Type of modal ('controls', 'audio', or 'impressum')
      */
     hideCloseButton(type) {
         const buttonId = `close${type.charAt(0).toUpperCase() + type.slice(1)}Btn`;
@@ -251,18 +252,21 @@ class StartScreenSystem {
     hideAllCloseButtons() {
         this.hideCloseButton('controls');
         this.hideCloseButton('audio');
+        this.hideCloseButton('impressum');
     }
 
     /**
      * Closes modal and hides close button
      * @public
-     * @param {string} type - Type of modal ('controls' or 'audio')
+     * @param {string} type - Type of modal ('controls', 'audio', or 'impressum')
      */
     closeModal(type) {
         if (type === 'controls') {
             this.showControls = false;
         } else if (type === 'audio') {
             this.showAudio = false;
+        } else if (type === 'impressum') {
+            this.showImpressum = false;
         }
         this.hideCloseButton(type);
         this.selectedOption = -1;
