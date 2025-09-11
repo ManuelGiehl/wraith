@@ -120,10 +120,12 @@ class StartScreenSystem {
                 break;
             case 1:
                 this.showControls = true;
+                this.showCloseButton('controls');
                 this.selectedOption = -1;
                 break;
             case 2:
                 this.showAudio = true;
+                this.showCloseButton('audio');
                 this.selectedOption = -1;
                 break;
             case 3:
@@ -213,5 +215,56 @@ class StartScreenSystem {
         this.showAudio = false;
         this.showImpressum = false;
         this.selectedOption = 0;
+        this.hideAllCloseButtons();
+    }
+
+    /**
+     * Shows close button for specific modal
+     * @public
+     * @param {string} type - Type of modal ('controls' or 'audio')
+     */
+    showCloseButton(type) {
+        const buttonId = `close${type.charAt(0).toUpperCase() + type.slice(1)}Btn`;
+        const button = document.getElementById(buttonId);
+        if (button) {
+            button.classList.remove('hidden');
+        }
+    }
+
+    /**
+     * Hides close button for specific modal
+     * @public
+     * @param {string} type - Type of modal ('controls' or 'audio')
+     */
+    hideCloseButton(type) {
+        const buttonId = `close${type.charAt(0).toUpperCase() + type.slice(1)}Btn`;
+        const button = document.getElementById(buttonId);
+        if (button) {
+            button.classList.add('hidden');
+        }
+    }
+
+    /**
+     * Hides all close buttons
+     * @public
+     */
+    hideAllCloseButtons() {
+        this.hideCloseButton('controls');
+        this.hideCloseButton('audio');
+    }
+
+    /**
+     * Closes modal and hides close button
+     * @public
+     * @param {string} type - Type of modal ('controls' or 'audio')
+     */
+    closeModal(type) {
+        if (type === 'controls') {
+            this.showControls = false;
+        } else if (type === 'audio') {
+            this.showAudio = false;
+        }
+        this.hideCloseButton(type);
+        this.selectedOption = -1;
     }
 }

@@ -136,6 +136,47 @@ body {
     cursor: default !important;
 }
 
+/* Close button styles */
+.close-btn {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 30px;
+    height: 30px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px solid #ffffff;
+    border-radius: 50%;
+    color: #ffffff;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(10px);
+}
+
+/* Position close buttons within their respective modals */
+#closeControlsBtn {
+    top: calc(50% - 200px);
+    left: calc(50% + 300px);
+}
+
+#closeAudioBtn {
+    top: calc(50% - 200px);
+    left: calc(50% + 300px);
+}
+
+.close-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.close-btn:active {
+    background: rgba(255, 255, 255, 0.3);
+}
+
 @media (max-width: 768px) {
     #gameContainer {
         transform: scale(0.8);

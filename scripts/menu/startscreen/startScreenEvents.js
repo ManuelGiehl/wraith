@@ -10,6 +10,28 @@ class StartScreenEvents {
      */
     constructor(startScreen) {
         this.startScreen = startScreen;
+        this.setupCloseButtonEvents();
+    }
+
+    /**
+     * Sets up event listeners for close buttons
+     * @private
+     */
+    setupCloseButtonEvents() {
+        const closeControlsBtn = document.getElementById('closeControlsBtn');
+        const closeAudioBtn = document.getElementById('closeAudioBtn');
+        
+        if (closeControlsBtn) {
+            closeControlsBtn.addEventListener('click', () => {
+                this.startScreen.closeModal('controls');
+            });
+        }
+        
+        if (closeAudioBtn) {
+            closeAudioBtn.addEventListener('click', () => {
+                this.startScreen.closeModal('audio');
+            });
+        }
     }
 
     /**
@@ -234,6 +256,7 @@ class StartScreenEvents {
             this.startScreen.showAudio = false;
             this.startScreen.showImpressum = false;
             this.startScreen.selectedOption = -1;
+            this.startScreen.hideAllCloseButtons();
         }
     }
 
