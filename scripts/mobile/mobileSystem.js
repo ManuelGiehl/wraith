@@ -27,16 +27,13 @@ class MobileSystem {
      */
     detectMobile() {
         const isMobileDevice = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-        
         const hasTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
         
         const isTablet = /iPad|Android/i.test(navigator.userAgent) || 
                         (hasTouch && window.innerWidth >= 768 && window.innerWidth <= 1600);
 
         const isTouchScreen = hasTouch;
-        
-        const isSmallTouchScreen = window.innerWidth <= 1600 && hasTouch;
-        
+        const isSmallTouchScreen = window.innerWidth <= 1600 && hasTouch; 
         const isMobile = isMobileDevice || isTouchScreen || isTablet || isSmallTouchScreen;
         
         return isMobile;
@@ -102,8 +99,6 @@ class MobileSystem {
      * @public
      */
     draw() {
-        // Mobile-specific drawing can be implemented here
-        // e.g. Touch feedback, etc.
     }
 
     /**

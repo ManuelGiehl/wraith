@@ -100,15 +100,12 @@ class MobileEvents {
         if (this.mobileOrientation.getShowPortraitWarning()) return;
         
         this.startAudioOnFirstTouch();
-        
-        // Add to active actions
+
         this.activeActions.add(action);
-        
-        // Start continuous action for movement and continuous actions
+
         if (this.isContinuousAction(action)) {
             this.startContinuousAction(action);
         } else {
-            // Single action (like jump, attack, etc.)
             this.executeAction(action);
         }
     }
@@ -119,14 +116,11 @@ class MobileEvents {
      */
     handleTouchEnd(action) {
         if (this.mobileOrientation.getShowPortraitWarning()) return;
-        
-        // Remove from active actions
+
         this.activeActions.delete(action);
-        
-        // Stop continuous action
+
         this.stopContinuousAction(action);
-        
-        // Handle key up for movement actions
+
         if (this.isMovementAction(action)) {
             const event = { code: this.getKeyCode(action) };
             if (this.isInGame() && this.game.wraithSystem.handleKeyUp) {
@@ -173,13 +167,13 @@ class MobileEvents {
      * @param {string} action - Action name
      */
     startContinuousAction(action) {
-        if (this.actionIntervals.has(action)) return; // Already running
+        if (this.actionIntervals.has(action)) return;
         
         const interval = setInterval(() => {
             if (this.activeActions.has(action)) {
                 this.executeAction(action);
             }
-        }, 50); // Execute every 50ms for smooth movement
+        }, 50);
         
         this.actionIntervals.set(action, interval);
     }
