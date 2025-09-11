@@ -47,6 +47,19 @@ class StartScreenEvents {
     resetHoverStates() {
         this.startScreen.hoveredOption = -1;
         this.startScreen.hoveredStartButton = false;
+
+        this.setCursor('default');
+    }
+
+    /**
+     * Sets cursor style using CSS classes
+     * @private
+     * @param {string} cursorType - Type of cursor ('pointer' or 'default')
+     */
+    setCursor(cursorType) {
+        const canvas = this.startScreen.game.canvas;
+        canvas.classList.remove('cursor-pointer', 'cursor-default');
+        canvas.classList.add(`cursor-${cursorType}`);
     }
 
     /**
@@ -60,12 +73,17 @@ class StartScreenEvents {
         const buttonWidth = 200;
         const buttonHeight = 50;
         
-        if (this.startScreen.mouseX >= centerX - buttonWidth/2 && 
+        const isHoveringButton = this.startScreen.mouseX >= centerX - buttonWidth/2 && 
             this.startScreen.mouseX <= centerX + buttonWidth/2 && 
             this.startScreen.mouseY >= buttonY - buttonHeight/2 && 
-            this.startScreen.mouseY <= buttonY + buttonHeight/2) {
+            this.startScreen.mouseY <= buttonY + buttonHeight/2;
+        
+        if (isHoveringButton) {
             this.startScreen.hoveredStartButton = true;
         }
+        
+        // Set cursor style based on hover state
+        this.setCursor(isHoveringButton ? 'pointer' : 'default');
     }
 
     /**
@@ -75,9 +93,15 @@ class StartScreenEvents {
     handleMenuHover() {
         const centerX = this.startScreen.game.width / 2;
         const centerY = this.startScreen.game.height / 2;
+        let isHoveringOption = false;
+        
         this.startScreen.options.forEach((option, index) => {
-            this.checkOptionHover(option, index, centerX, centerY);
+            if (this.checkOptionHover(option, index, centerX, centerY)) {
+                isHoveringOption = true;
+            }
         });
+
+        this.setCursor(isHoveringOption ? 'pointer' : 'default');
     }
 
     /**
@@ -87,15 +111,20 @@ class StartScreenEvents {
      * @param {number} index - Option index
      * @param {number} centerX - Center X coordinate
      * @param {number} centerY - Center Y coordinate
+     * @returns {boolean} Whether the option is hovered
      */
     checkOptionHover(option, index, centerX, centerY) {
         const y = centerY + (index * 60) - 20;
         const textHeight = 26;
         const halfHeight = textHeight / 2;
-        if (this.startScreen.mouseY >= y - halfHeight && this.startScreen.mouseY <= y + halfHeight && 
-            this.startScreen.mouseX >= centerX - 100 && this.startScreen.mouseX <= centerX + 100) {
+        const isHovered = this.startScreen.mouseY >= y - halfHeight && this.startScreen.mouseY <= y + halfHeight && 
+            this.startScreen.mouseX >= centerX - 100 && this.startScreen.mouseX <= centerX + 100;
+        
+        if (isHovered) {
             this.startScreen.hoveredOption = index;
         }
+        
+        return isHovered;
     }
 
     /**

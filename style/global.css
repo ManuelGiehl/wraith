@@ -127,6 +127,15 @@ body {
 }
 
 /* Mobile Controls */
+/* Cursor styles for interactive elements */
+.cursor-pointer {
+    cursor: pointer !important;
+}
+
+.cursor-default {
+    cursor: default !important;
+}
+
 @media (max-width: 768px) {
     #gameContainer {
         transform: scale(0.8);
