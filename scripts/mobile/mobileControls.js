@@ -14,7 +14,8 @@ class MobileControls {
             right: null,
             jump: null,
             attack: null,
-            ultimate: null
+            ultimate: null,
+            pause: null
         };
     }
 
@@ -26,6 +27,7 @@ class MobileControls {
         const controlsContainer = this.createControlsContainer();
         this.setupDpadAndUltimate(controlsContainer);
         this.setupActionButtons(controlsContainer);
+        this.setupPauseButton(controlsContainer);
         this.createPortraitWarning();
     }
 
@@ -216,6 +218,27 @@ class MobileControls {
     }
 
     /**
+     * Sets up pause button (top left)
+     * @private
+     */
+    setupPauseButton(container) {
+        this.touchControls.pause = this.createTouchButton('pause', '⏸', 'pause');
+        this.touchControls.pause.style.backgroundColor = 'rgba(42, 74, 107, 0.8)';
+        this.touchControls.pause.style.position = 'fixed';
+        this.touchControls.pause.style.top = '20px';
+        this.touchControls.pause.style.left = '20px';
+        this.touchControls.pause.style.width = '60px';
+        this.touchControls.pause.style.height = '60px';
+        this.touchControls.pause.style.fontSize = '24px';
+        this.touchControls.pause.style.border = '2px solid #4a90e2';
+        this.touchControls.pause.style.borderRadius = '8px';
+        this.touchControls.pause.style.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.3)';
+        this.touchControls.pause.style.display = 'none';
+        this.touchControls.pause.style.zIndex = '1001'; 
+        document.body.appendChild(this.touchControls.pause);
+    }
+
+    /**
      * Creates portrait warning
      * @private
      */
@@ -231,6 +254,17 @@ class MobileControls {
             </div>
         `;
         document.body.appendChild(warning);
+    }
+
+    /**
+     * Shows or hides the pause button
+     * @public
+     * @param {boolean} show - Whether to show the pause button
+     */
+    setPauseButtonVisible(show) {
+        if (this.touchControls.pause) {
+            this.touchControls.pause.style.display = show ? 'block' : 'none';
+        }
     }
 
     /**

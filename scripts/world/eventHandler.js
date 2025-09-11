@@ -82,6 +82,11 @@ class EventHandler {
         this.game.canvas.addEventListener('mousedown', (e) => {
             this.handleMouseDown(e);
         });
+
+        this.game.canvas.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            this.handleMouseClick(e);
+        });
     }
 
     /**
@@ -147,9 +152,20 @@ class EventHandler {
      */
     getMousePosition(e) {
         const rect = this.game.canvas.getBoundingClientRect();
+        
+        let clientX, clientY;
+        if (e.touches && e.touches.length > 0) {
+            clientX = e.touches[0].clientX;
+            clientY = e.touches[0].clientY;
+        } else {
+            // Mouse event
+            clientX = e.clientX;
+            clientY = e.clientY;
+        }
+        
         return {
-            x: e.clientX - rect.left,
-            y: e.clientY - rect.top
+            x: clientX - rect.left,
+            y: clientY - rect.top
         };
     }
 
@@ -220,6 +236,10 @@ class EventHandler {
         
         if (this.game.backgroundMusicSystem) {
             this.game.backgroundMusicSystem.play();
+        }
+        
+        if (this.game.mobileSystem && this.game.mobileSystem.getIsMobile()) {
+            this.game.mobileSystem.getMobileControls().setPauseButtonVisible(false);
         }
     }
 }

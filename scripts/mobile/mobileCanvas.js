@@ -188,12 +188,20 @@ class MobileCanvas {
      * @private
      */
     setupEnterButtonEvents(enterBtn) {
-        enterBtn.addEventListener('click', () => {
+        enterBtn.addEventListener('click', (e) => {
+            if (this.game.isPaused) {
+                this.game.eventHandler.handlePauseButtonClick();
+                return;
+            }
             this.handleEnterPress();
         });
         
         enterBtn.addEventListener('touchstart', (e) => {
             e.preventDefault();
+            if (this.game.isPaused) {
+                this.game.eventHandler.handlePauseButtonClick();
+                return;
+            }
             e.stopPropagation();
             this.handleEnterPress();
         });

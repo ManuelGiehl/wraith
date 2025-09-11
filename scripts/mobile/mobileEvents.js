@@ -314,6 +314,7 @@ class MobileEvents {
             case 'attack': return 'KeyA';
             case 'potion': return 'KeyQ';
             case 'ultimate': return 'KeyR';
+            case 'pause': return 'Escape';
             default: return '';
         }
     }
