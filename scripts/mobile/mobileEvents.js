@@ -14,6 +14,8 @@ class MobileEvents {
         this.mobileControls = mobileControls;
         this.mobileOrientation = mobileOrientation;
         this.audioStarted = false;
+        this.activeActions = new Set();
+        this.actionIntervals = new Map();
     }
 
     /**
@@ -99,6 +101,107 @@ class MobileEvents {
         
         this.startAudioOnFirstTouch();
         
+        // Add to active actions
+        this.activeActions.add(action);
+        
+        // Start continuous action for movement and continuous actions
+        if (this.isContinuousAction(action)) {
+            this.startContinuousAction(action);
+        } else {
+            // Single action (like jump, attack, etc.)
+            this.executeAction(action);
+        }
+    }
+
+    /**
+     * Handles touch end
+     * @private
+     */
+    handleTouchEnd(action) {
+        if (this.mobileOrientation.getShowPortraitWarning()) return;
+        
+        // Remove from active actions
+        this.activeActions.delete(action);
+        
+        // Stop continuous action
+        this.stopContinuousAction(action);
+        
+        // Handle key up for movement actions
+        if (this.isMovementAction(action)) {
+            const event = { code: this.getKeyCode(action) };
+            if (this.isInGame() && this.game.wraithSystem.handleKeyUp) {
+                this.game.wraithSystem.handleKeyUp(event);
+            }
+        }
+    }
+
+    /**
+     * Checks if in game
+     * @private
+     * @returns {boolean} True if in game
+     */
+    isInGame() {
+        return !this.game.startScreenSystem.isVisible && 
+               !this.game.endScreenSystem.isVisible && 
+               !this.game.gameOverScreenSystem.isVisible && 
+               !this.game.isPaused;
+    }
+
+    /**
+     * Checks if action should be continuous
+     * @private
+     * @param {string} action - Action name
+     * @returns {boolean} True if continuous action
+     */
+    isContinuousAction(action) {
+        return ['left', 'right', 'up', 'down', 'jump', 'attack', 'potion', 'ultimate'].includes(action);
+    }
+
+    /**
+     * Checks if action is movement
+     * @private
+     * @param {string} action - Action name
+     * @returns {boolean} True if movement action
+     */
+    isMovementAction(action) {
+        return ['left', 'right', 'up', 'down'].includes(action);
+    }
+
+    /**
+     * Starts continuous action
+     * @private
+     * @param {string} action - Action name
+     */
+    startContinuousAction(action) {
+        if (this.actionIntervals.has(action)) return; // Already running
+        
+        const interval = setInterval(() => {
+            if (this.activeActions.has(action)) {
+                this.executeAction(action);
+            }
+        }, 50); // Execute every 50ms for smooth movement
+        
+        this.actionIntervals.set(action, interval);
+    }
+
+    /**
+     * Stops continuous action
+     * @private
+     * @param {string} action - Action name
+     */
+    stopContinuousAction(action) {
+        if (this.actionIntervals.has(action)) {
+            clearInterval(this.actionIntervals.get(action));
+            this.actionIntervals.delete(action);
+        }
+    }
+
+    /**
+     * Executes a single action
+     * @private
+     * @param {string} action - Action name
+     */
+    executeAction(action) {
         const event = { code: this.getKeyCode(action) };
         
         if (this.game.startScreenSystem.isVisible) {
@@ -117,31 +220,13 @@ class MobileEvents {
     }
 
     /**
-     * Handles touch end
-     * @private
+     * Cleans up all active intervals
+     * @public
      */
-    handleTouchEnd(action) {
-        if (this.mobileOrientation.getShowPortraitWarning()) return;
-        
-        const event = { code: this.getKeyCode(action) };
-        
-        if (this.isInGame() && this.isMovementAction(action)) {
-            if (this.game.wraithSystem.handleKeyUp) {
-                this.game.wraithSystem.handleKeyUp(event);
-            }
-        }
-    }
-
-    /**
-     * Checks if in game
-     * @private
-     * @returns {boolean} True if in game
-     */
-    isInGame() {
-        return !this.game.startScreenSystem.isVisible && 
-               !this.game.endScreenSystem.isVisible && 
-               !this.game.gameOverScreenSystem.isVisible && 
-               !this.game.isPaused;
+    cleanup() {
+        this.actionIntervals.forEach(interval => clearInterval(interval));
+        this.actionIntervals.clear();
+        this.activeActions.clear();
     }
 
     /**

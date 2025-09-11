@@ -44,7 +44,9 @@ class UIScore {
      * @private
      */
     drawScoreText() {
-        this.game.ctx.fillText(`Score: ${this.game.score}`, this.game.width - 10, 10);
+        const isMobile = this.game.mobileSystem && this.game.mobileSystem.isMobile;
+        const yPosition = isMobile ? 60 : 10;
+        this.game.ctx.fillText(`Score: ${this.game.score}`, this.game.width - 10, yPosition);
     }
 
     /**
@@ -52,9 +54,11 @@ class UIScore {
      * @private
      */
     drawSpawnIntervalText() {
+        const isMobile = this.game.mobileSystem && this.game.mobileSystem.isMobile;
+        const yPosition = isMobile ? 85 : 35;
         this.game.ctx.fillStyle = '#ffffff';
         this.game.ctx.font = 'bold 16px Raleway';
-        this.game.ctx.fillText(`Spawn: ${(this.game.golemSystem.golemSpawnInterval / 1000).toFixed(1)}s`, this.game.width - 10, 35);
+        this.game.ctx.fillText(`Spawn: ${(this.game.golemSystem.golemSpawnInterval / 1000).toFixed(1)}s`, this.game.width - 10, yPosition);
     }
 
     /**

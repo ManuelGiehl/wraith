@@ -55,7 +55,7 @@ html, body {
 /* Mobile Controls Container */
 .mobile-controls {
     position: fixed;
-    bottom: 0;
+    bottom: 20px;
     left: 0;
     right: 0;
     height: 120px;
@@ -194,25 +194,27 @@ html, body {
     .mobile-controls {
         height: 100px;
         padding: 8px 15px;
-    }
-    
-    .mobile-button {
-        width: 50px;
-        height: 50px;
-        font-size: 20px;
-    }
-}
-
-@media (max-width: 480px) {
-    .mobile-controls {
-        height: 90px;
-        padding: 6px 10px;
+        gap: 8px;
     }
     
     .mobile-button {
         width: 45px;
         height: 45px;
         font-size: 18px;
+    }
+}
+
+@media (max-width: 480px) {
+    .mobile-controls {
+        height: 80px;
+        padding: 3px 5px;
+        gap: 4px;
+    }
+    
+    .mobile-button {
+        width: 40px;
+        height: 40px;
+        font-size: 16px;
     }
     
     .portrait-warning-content {
@@ -232,8 +234,23 @@ html, body {
     }
 }
 
+/* Extra small screens */
+@media (max-width: 360px) {
+    .mobile-controls {
+        height: 70px;
+        padding: 2px 4px;
+        gap: 3px;
+    }
+    
+    .mobile-button {
+        width: 35px;
+        height: 35px;
+        font-size: 14px;
+    }
+}
+
 /* Verstecke Mobile Controls auf Desktop */
-@media (min-width: 1024px) {
+@media (min-width: 1600px) {
     .mobile-controls {
         display: none !important;
     }
@@ -245,6 +262,35 @@ html, body {
     width: 120px;
     height: 120px;
     pointer-events: auto;
+}
+
+/* Responsive D-Pad */
+@media (max-width: 768px) {
+    .mobile-dpad {
+        width: 90px;
+        height: 90px;
+    }
+}
+
+@media (max-width: 480px) {
+    .mobile-dpad {
+        width: 70px;
+        height: 70px;
+    }
+}
+
+@media (max-width: 360px) {
+    .mobile-dpad {
+        width: 60px;
+        height: 60px;
+    }
+}
+
+@media (max-width: 320px) {
+    .mobile-dpad {
+        width: 50px;
+        height: 50px;
+    }
 }
 
 .dpad-center {
@@ -287,6 +333,39 @@ html, body {
 .dpad-button:active {
     background: rgba(255, 255, 255, 0.4);
     transform: scale(0.95);
+}
+
+/* Responsive D-Pad Buttons */
+@media (max-width: 768px) {
+    .dpad-button {
+        width: 40px;
+        height: 40px;
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 480px) {
+    .dpad-button {
+        width: 35px;
+        height: 35px;
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 360px) {
+    .dpad-button {
+        width: 30px;
+        height: 30px;
+        font-size: 10px;
+    }
+}
+
+@media (max-width: 320px) {
+    .dpad-button {
+        width: 25px;
+        height: 25px;
+        font-size: 8px;
+    }
 }
 
 /* Touch-spezifische Optimierungen */

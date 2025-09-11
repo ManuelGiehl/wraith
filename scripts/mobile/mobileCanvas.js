@@ -167,18 +167,22 @@ class MobileCanvas {
         enterBtn.innerHTML = '↵ Enter';
         enterBtn.style.cssText = `
             position: fixed;
-            top: 10px;
-            right: 10px;
+            top: 20px;
+            right: 20px;
             z-index: 10000;
-            background: rgba(255, 255, 255, 0.2);
+            background: rgba(42, 74, 107, 0.8);
             color: white;
-            border: 2px solid white;
-            border-radius: 10px;
-            padding: 15px 20px;
+            border: 2px solid #4a90e2;
+            border-radius: 8px;
+            width: 60px;
+            height: 60px;
             font-size: 16px;
             font-weight: bold;
             cursor: pointer;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
         `;
         return enterBtn;
     }

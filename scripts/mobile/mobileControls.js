@@ -249,8 +249,8 @@ class MobileControls {
         warning.innerHTML = `
             <div class="portrait-warning-content">
                 <div class="portrait-icon">📱</div>
-                <h2>Gerät drehen</h2>
-                <p>Bitte drehe dein Gerät ins Querformat, um das Spiel zu spielen.</p>
+                <h2>Rotate Device</h2>
+                <p>Please rotate your device to landscape mode to play the game.</p>
             </div>
         `;
         document.body.appendChild(warning);

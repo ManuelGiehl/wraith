@@ -11,9 +11,12 @@ class MobileSystem {
         this.game = game;
         this.isMobile = this.detectMobile();
         
+        this.initializeModules();
+        
         if (this.isMobile) {
-            this.initializeModules();
             this.init();
+        } else {
+            this.checkAndShowMobileControls();
         }
     }
 
@@ -23,9 +26,20 @@ class MobileSystem {
      * @returns {boolean} True if mobile device
      */
     detectMobile() {
-        return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ||
-               ('ontouchstart' in window) ||
-               (navigator.maxTouchPoints > 0);
+        const isMobileDevice = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        
+        const hasTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+        
+        const isTablet = /iPad|Android/i.test(navigator.userAgent) || 
+                        (hasTouch && window.innerWidth >= 768 && window.innerWidth <= 1600);
+
+        const isTouchScreen = hasTouch;
+        
+        const isSmallTouchScreen = window.innerWidth <= 1600 && hasTouch;
+        
+        const isMobile = isMobileDevice || isTouchScreen || isTablet || isSmallTouchScreen;
+        
+        return isMobile;
     }
 
     /**
@@ -38,7 +52,6 @@ class MobileSystem {
         this.mobileOrientation = new MobileOrientation(this.game);
         this.mobileEvents = new MobileEvents(this.game, this.mobileControls, this.mobileOrientation);
         
-        // Make modules available to game instance
         this.game.mobileCanvas = this.mobileCanvas;
         this.game.mobileControls = this.mobileControls;
         this.game.mobileOrientation = this.mobileOrientation;
@@ -57,6 +70,21 @@ class MobileSystem {
         this.mobileOrientation.updateOrientation();
         this.mobileControls.createTouchControls();
         this.mobileEvents.setupTouchEvents();
+    }
+
+    /**
+     * Checks if mobile controls should be shown based on screen size
+     * @private
+     */
+    checkAndShowMobileControls() {
+        const hasTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+        const isTabletSize = window.innerWidth >= 768 && window.innerWidth <= 1600;
+        const isSmallScreen = window.innerWidth <= 1600;
+        
+        if (hasTouch && (isTabletSize || isSmallScreen)) {
+            this.mobileControls.createTouchControls();
+            this.mobileEvents.setupTouchEvents();
+        }
     }
 
     /**
