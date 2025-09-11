@@ -29,7 +29,7 @@ class EndScreenSystem {
     hide() {
         this.isVisible = false;
         this.selectedButton = 0;
-        // Reset background to normal when leaving boss room
+       
         if (this.game.bossRoomSystem) {
             this.game.bossRoomSystem.switchToNormalBackground();
         }
@@ -126,9 +126,25 @@ class EndScreenSystem {
         const centerX = this.game.width / 2;
         const centerY = this.game.height / 2;
 
+        this.drawBackground();
+        this.drawTitle(centerX, centerY);
+        this.drawSubtitle(centerX, centerY);
+        this.drawButtons(centerX, centerY);
+        this.resetTextAlignment();
+    }
+
+    /**
+     * Draws the background overlay
+     */
+    drawBackground() {
         this.game.ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
         this.game.ctx.fillRect(0, 0, this.game.width, this.game.height);
-        
+    }
+
+    /**
+     * Draws the main title
+     */
+    drawTitle(centerX, centerY) {
         this.game.ctx.fillStyle = '#ffffff';
         this.game.ctx.font = 'bold 48px Raleway';
         this.game.ctx.textAlign = 'center';
@@ -139,32 +155,67 @@ class EndScreenSystem {
         
         this.game.ctx.fillStyle = '#ffffff';
         this.game.ctx.fillText('CONGRATULATIONS!', centerX, centerY - 50);
-        
+    }
+
+    /**
+     * Draws the subtitle
+     */
+    drawSubtitle(centerX, centerY) {
         this.game.ctx.font = 'bold 24px Raleway';
         this.game.ctx.fillStyle = '#cccccc';
         this.game.ctx.fillText('YOU WON!', centerX, centerY + 20);
+    }
+
+    /**
+     * Draws the buttons
+     */
+    drawButtons(centerX, centerY) {
         this.game.ctx.textAlign = 'center';
         this.buttons.forEach((button, index) => {
             const y = centerY + 100 + (index * 60);
-            
-            if (index === this.selectedButton) {
-                this.game.ctx.fillStyle = '#00aaff';
-                this.game.ctx.font = 'bold 32px Raleway';
-                
-                const textWidth = this.game.ctx.measureText(button).width;
-                const padding = 20;
-                this.game.ctx.fillStyle = 'rgba(0, 170, 255, 0.2)';
-                this.game.ctx.fillRect(centerX - textWidth/2 - padding, y - 25, textWidth + padding*2, 50);
-                
-                this.game.ctx.fillStyle = '#00aaff';
-            } else {
-                this.game.ctx.fillStyle = '#ffffff';
-                this.game.ctx.font = 'bold 28px Raleway';
-            }
-            
-            this.game.ctx.fillText(button, centerX, y);
+            this.drawButton(button, centerX, y, index);
         });
+    }
 
+    /**
+     * Draws a single button
+     */
+    drawButton(button, centerX, y, index) {
+        if (index === this.selectedButton) {
+            this.drawSelectedButton(button, centerX, y);
+        } else {
+            this.drawNormalButton(button, centerX, y);
+        }
+        this.game.ctx.fillText(button, centerX, y);
+    }
+
+    /**
+     * Draws selected button styling
+     */
+    drawSelectedButton(button, centerX, y) {
+        this.game.ctx.fillStyle = '#00aaff';
+        this.game.ctx.font = 'bold 32px Raleway';
+        
+        const textWidth = this.game.ctx.measureText(button).width;
+        const padding = 20;
+        this.game.ctx.fillStyle = 'rgba(0, 170, 255, 0.2)';
+        this.game.ctx.fillRect(centerX - textWidth/2 - padding, y - 25, textWidth + padding*2, 50);
+        
+        this.game.ctx.fillStyle = '#00aaff';
+    }
+
+    /**
+     * Draws normal button styling
+     */
+    drawNormalButton(button, centerX, y) {
+        this.game.ctx.fillStyle = '#ffffff';
+        this.game.ctx.font = 'bold 28px Raleway';
+    }
+
+    /**
+     * Resets text alignment
+     */
+    resetTextAlignment() {
         this.game.ctx.textAlign = 'left';
     }
 }

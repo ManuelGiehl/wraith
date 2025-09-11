@@ -14,23 +14,18 @@ class Game {
         this.height = 720;
         this.scale = 1;
         
-        // Game state
         this.score = 0;
         this.gameOver = false;
         this.isPaused = false;
         this.keys = {};
         
-        // FPS timing
         this.lastFrameTime = 0;
         this.frameCount = 0;
         
-        // Image cache
         this.loadedImages = new Map();
         
-        // Ultimate cast ID for unique hit detection
         this.ultimateCastId = 0;
         
-        // Initialize all systems
         this.initializeSystems();
         this.initializeModules();
         
@@ -192,7 +187,6 @@ class Game {
     }
 }
 
-// Start the game when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
     new Game();
 });
