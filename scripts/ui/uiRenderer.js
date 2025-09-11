@@ -307,8 +307,7 @@ class UIRenderer {
         ctx.strokeStyle = '#00aaff';
         ctx.lineWidth = 3;
         ctx.strokeRect(centerX - 400, centerY - 280, 800, 560);
-        
-        // Innerer hellerer Rahmen
+
         ctx.strokeStyle = '#4a90e2';
         ctx.lineWidth = 1;
         ctx.strokeRect(centerX - 398, centerY - 278, 796, 556);

@@ -72,11 +72,11 @@ class UIHealthBar {
      */
     setHealthBarColor(hpPercent) {
         if (hpPercent > 0.5) {
-            this.game.ctx.fillStyle = '#00ff00'; // Green
+            this.game.ctx.fillStyle = '#00ff00';
         } else if (hpPercent > 0.25) {
-            this.game.ctx.fillStyle = '#ffff00'; // Yellow
+            this.game.ctx.fillStyle = '#ffff00'; 
         } else {
-            this.game.ctx.fillStyle = '#ff0000'; // Red
+            this.game.ctx.fillStyle = '#ff0000'; 
         }
     }
 
@@ -215,15 +215,12 @@ class UIHealthBar {
         this.game.ctx.fillStyle = '#ffffff';
         this.game.ctx.font = 'bold 18px Raleway';
         this.game.ctx.textAlign = 'left';
-        this.game.ctx.textBaseline = 'top';
-        
+        this.game.ctx.textBaseline = 'top'; 
         this.game.ctx.shadowColor = 'rgba(0, 0, 0, 0.8)';
         this.game.ctx.shadowBlur = 4;
         this.game.ctx.shadowOffsetX = 2;
         this.game.ctx.shadowOffsetY = 2;
-        
         this.game.ctx.fillText(`Damage: ${this.game.wraithSystem.player.sSkillDamage}`, x + 5, y + 50);
-        
         this.game.ctx.shadowColor = 'transparent';
         this.game.ctx.shadowBlur = 0;
         this.game.ctx.shadowOffsetX = 0;
@@ -276,16 +273,14 @@ class UIHealthBar {
     drawManaPotionNotAvailable(x, y) {
         this.game.ctx.fillStyle = '#666666';
         this.game.ctx.font = 'bold 18px Raleway';
-        
-        // Schatten hinzufügen
+
         this.game.ctx.shadowColor = 'rgba(0, 0, 0, 0.8)';
         this.game.ctx.shadowBlur = 4;
         this.game.ctx.shadowOffsetX = 2;
         this.game.ctx.shadowOffsetY = 2;
         
         this.game.ctx.fillText(`Mana-Potion (Q): Not available`, x + 5, y + 75);
-        
-        // Schatten zurücksetzen
+ 
         this.game.ctx.shadowColor = 'transparent';
         this.game.ctx.shadowBlur = 0;
         this.game.ctx.shadowOffsetX = 0;

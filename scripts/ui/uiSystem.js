@@ -11,14 +11,12 @@ class UISystem {
     constructor(game) {
         this.game = game;
         
-        // UI Elements
         this.healthBar = document.getElementById('healthFill');
         this.scoreDisplay = document.getElementById('score');
         this.gameOverScreen = document.getElementById('gameOverScreen');
         this.finalScoreDisplay = document.getElementById('finalScore');
         this.restartBtn = document.getElementById('restartBtn');
-        
-        // Initialize UI modules
+
         this.initializeModules();
     }
 
@@ -65,25 +63,13 @@ class UISystem {
      * @public
      */
     drawUI() {
-        // Health Bar with text
         this.healthBarModule.drawHealthBar();
-        
-        // Score in top right
         this.scoreModule.drawScore();
-        
-        // Ultimate Status Bar
         this.healthBarModule.drawUltimateBar();
-        
-        // READY! (R) under the Wraith
         this.feedbackModule.drawUltimateReady();
-        
-        // Damage Increase Feedback
         this.feedbackModule.drawDamageIncrease();
-        
-        // Ultimate Damage Increase Feedback
         this.feedbackModule.drawUltimateDamageIncrease();
-        
-        // Pause display
+ 
         if (this.game.isPaused) {
             this.game.cameraSystem.drawPauseScreen();
         }
