@@ -198,7 +198,7 @@ class StartScreenSystem {
         this.game.rainSystem.reset();
         this.game.moonSystem.reset();
         this.game.rainSystem.setEnabled(true);
-        // WICHTIG: Bossraum-Flag zurücksetzen
+
         this.game.bossRoomSystem.inBossRoom = false;
         this.game.bossRoomSystem.enteringBossRoom = false;
         this.selectedOption = 0;
