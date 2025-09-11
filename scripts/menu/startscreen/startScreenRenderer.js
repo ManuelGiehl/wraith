@@ -38,6 +38,17 @@ class StartScreenRenderer {
         const centerX = this.startScreen.game.width / 2;
         const centerY = this.startScreen.game.height / 2;
 
+        this.handleIntroPhases(centerX, centerY);
+        this.resetTextAlignment();
+    }
+
+    /**
+     * Handles different intro phases
+     * @private
+     * @param {number} centerX - Center X coordinate
+     * @param {number} centerY - Center Y coordinate
+     */
+    handleIntroPhases(centerX, centerY) {
         if (this.startScreen.introPhase === 'black') {
             this.drawBlackScreen();
             return;
@@ -48,6 +59,16 @@ class StartScreenRenderer {
             return;
         }
 
+        this.drawMainMenuContent(centerX, centerY);
+    }
+
+    /**
+     * Draws main menu content
+     * @private
+     * @param {number} centerX - Center X coordinate
+     * @param {number} centerY - Center Y coordinate
+     */
+    drawMainMenuContent(centerX, centerY) {
         this.drawLayerAnimation();
 
         if (this.startScreen.introPhase === 'title' || this.startScreen.introPhase === 'menu') {
@@ -57,7 +78,13 @@ class StartScreenRenderer {
         if (this.startScreen.introPhase === 'menu') {
             this.drawMenuOptions(centerX, centerY);
         }
+    }
 
+    /**
+     * Resets text alignment
+     * @private
+     */
+    resetTextAlignment() {
         this.startScreen.game.ctx.textAlign = 'left';
     }
 
@@ -78,22 +105,52 @@ class StartScreenRenderer {
      */
     drawTitle(centerX, centerY) {
         this.startScreen.game.ctx.save();
+        this.setupTitleAlpha();
+        this.setupTitleShadow();
+        this.drawTitleText(centerX, centerY);
+        this.resetTitleShadow();
+        this.startScreen.game.ctx.restore();
+    }
+
+    /**
+     * Sets up title alpha
+     * @private
+     */
+    setupTitleAlpha() {
         this.startScreen.game.ctx.globalAlpha = this.startScreen.titleAlpha;
-        
+    }
+
+    /**
+     * Sets up title shadow
+     * @private
+     */
+    setupTitleShadow() {
         this.startScreen.game.ctx.shadowColor = '#4a90e2';
         this.startScreen.game.ctx.shadowBlur = 15;
         this.startScreen.game.ctx.shadowOffsetX = 0;
         this.startScreen.game.ctx.shadowOffsetY = 0;
-        
+    }
+
+    /**
+     * Draws the title text
+     * @private
+     * @param {number} centerX - Center X coordinate
+     * @param {number} centerY - Center Y coordinate
+     */
+    drawTitleText(centerX, centerY) {
         this.startScreen.game.ctx.fillStyle = '#ffffff';
         this.startScreen.game.ctx.font = 'bold 48px Raleway';
         this.startScreen.game.ctx.textAlign = 'center';
         this.startScreen.game.ctx.fillText('WRAITH', centerX, centerY - 120);
-        
+    }
+
+    /**
+     * Resets title shadow
+     * @private
+     */
+    resetTitleShadow() {
         this.startScreen.game.ctx.shadowBlur = 0;
         this.startScreen.game.ctx.shadowColor = 'transparent';
-        
-        this.startScreen.game.ctx.restore();
     }
 
     /**
@@ -103,7 +160,12 @@ class StartScreenRenderer {
      * @param {number} centerY - Center Y coordinate
      */
     drawMenuOptions(centerX, centerY) {
-        TemplateManager.drawMenuOptions(this.startScreen.game.ctx, this.startScreen.options, centerX, centerY, this.startScreen.selectedOption, this.startScreen.hoveredOption, this.startScreen.menuAlpha);
+        TemplateManager.drawMenuOptions(
+            this.startScreen.game.ctx, 
+            this.startScreen.options, centerX, centerY, 
+            this.startScreen.selectedOption, 
+            this.startScreen.hoveredOption, 
+            this.startScreen.menuAlpha);
     }
 
     /**
@@ -111,7 +173,17 @@ class StartScreenRenderer {
      * @private
      */
     drawLayerAnimation() {
-        TemplateManager.drawLayerAnimation(this.startScreen.game.ctx, this.startScreen.game, this.startScreen.layerAlphas, this.startScreen.layerPositions, this.startScreen.layerRotations, this.startScreen.moonIntroPhase, this.startScreen.screenShake, this.startScreen.screenShakeIntensity, this.startScreen.gravestoneWobble, this.startScreen.moonFloat);
+        TemplateManager.drawLayerAnimation(
+            this.startScreen.game.ctx, 
+            this.startScreen.game, 
+            this.startScreen.layerAlphas, 
+            this.startScreen.layerPositions, 
+            this.startScreen.layerRotations, 
+            this.startScreen.moonIntroPhase, 
+            this.startScreen.screenShake, 
+            this.startScreen.screenShakeIntensity, 
+            this.startScreen.gravestoneWobble, 
+            this.startScreen.moonFloat);
     }
 
     /**
@@ -120,7 +192,10 @@ class StartScreenRenderer {
      */
     drawControls() {
         this.drawLayerAnimation();
-        TemplateManager.drawControls(this.startScreen.game.ctx, this.startScreen.game.width, this.startScreen.game.height);
+        TemplateManager.drawControls(
+            this.startScreen.game.ctx, 
+            this.startScreen.game.width, 
+            this.startScreen.game.height);
     }
 
     /**
@@ -131,7 +206,10 @@ class StartScreenRenderer {
         this.drawLayerAnimation();
         
         if (this.startScreen.game.audioSystem) {
-            this.startScreen.game.audioSystem.drawAudioControls(this.startScreen.game.ctx, this.startScreen.game.width, this.startScreen.game.height);
+            this.startScreen.game.audioSystem.drawAudioControls(
+                this.startScreen.game.ctx, 
+                this.startScreen.game.width, 
+                this.startScreen.game.height);
         }
     }
 
@@ -140,7 +218,11 @@ class StartScreenRenderer {
      * @private
      */
     drawGameTooltip() {
-        TemplateManager.drawHowToPlay(this.startScreen.game.ctx, this.startScreen.game.width, this.startScreen.game.height, this.startScreen.hoveredStartButton);
+        TemplateManager.drawHowToPlay(
+            this.startScreen.game.ctx, 
+            this.startScreen.game.width, 
+            this.startScreen.game.height, 
+            this.startScreen.hoveredStartButton);
     }
 
     /**
@@ -148,6 +230,9 @@ class StartScreenRenderer {
      * @private
      */
     drawImpressum() {
-        TemplateManager.drawImpressum(this.startScreen.game.ctx, this.startScreen.game.width, this.startScreen.game.height);
+        TemplateManager.drawImpressum(
+            this.startScreen.game.ctx, 
+            this.startScreen.game.width, 
+            this.startScreen.game.height);
     }
 }
