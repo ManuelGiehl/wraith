@@ -119,11 +119,13 @@ class StartScreenEvents {
             }
         }
         
-        this.startScreen.options.forEach((option, index) => {
-            if (this.checkOptionHover(option, index, centerX, centerY)) {
-                isHoveringOption = true;
-            }
-        });
+        if (!this.startScreen.showControls && !this.startScreen.showAudio && !this.startScreen.showImpressum) {
+            this.startScreen.options.forEach((option, index) => {
+                if (this.checkOptionHover(option, index, centerX, centerY)) {
+                    isHoveringOption = true;
+                }
+            });
+        }
 
         this.setCursor(isHoveringOption ? 'pointer' : 'default');
     }
@@ -231,9 +233,11 @@ class StartScreenEvents {
             }
         }
         
-        if (this.startScreen.hoveredOption >= 0) {
-            this.startScreen.selectedOption = this.startScreen.hoveredOption;
-            this.startScreen.selectOption();
+        if (!this.startScreen.showControls && !this.startScreen.showAudio && !this.startScreen.showImpressum) {
+            if (this.startScreen.hoveredOption >= 0) {
+                this.startScreen.selectedOption = this.startScreen.hoveredOption;
+                this.startScreen.selectOption();
+            }
         }
     }
 
@@ -303,13 +307,15 @@ class StartScreenEvents {
             }
         }
 
-        const buttons = MenuRenderer.getButtonCoordinates();
-        
-        for (let button of buttons) {
-            if (this.isPointInRect(touchX, touchY, button)) {
-                this.startScreen.selectedOption = button.index;
-                this.startScreen.selectOption();
-                return;
+        if (!this.startScreen.showControls && !this.startScreen.showAudio && !this.startScreen.showImpressum) {
+            const buttons = MenuRenderer.getButtonCoordinates();
+            
+            for (let button of buttons) {
+                if (this.isPointInRect(touchX, touchY, button)) {
+                    this.startScreen.selectedOption = button.index;
+                    this.startScreen.selectOption();
+                    return;
+                }
             }
         }
     }
