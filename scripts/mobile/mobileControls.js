@@ -39,6 +39,7 @@ class MobileControls {
         const controlsContainer = document.createElement('div');
         controlsContainer.id = 'mobile-controls';
         controlsContainer.className = 'mobile-controls';
+        controlsContainer.style.display = 'none';
         document.body.appendChild(controlsContainer);
         return controlsContainer;
     }
@@ -233,7 +234,7 @@ class MobileControls {
         this.touchControls.pause.style.border = '2px solid #4a90e2';
         this.touchControls.pause.style.borderRadius = '8px';
         this.touchControls.pause.style.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.3)';
-        this.touchControls.pause.style.display = 'block'; // Always visible
+        this.touchControls.pause.style.display = 'none';
         this.touchControls.pause.style.zIndex = '1001'; 
         document.body.appendChild(this.touchControls.pause);
     }

@@ -11,6 +11,8 @@ class MobileOrientation {
         this.game = game;
         this.isPortrait = false;
         this.showPortraitWarning = false;
+        this.orientationConfirmed = false;
+        this.orientationCheckDelay = 0; 
     }
 
     /**
@@ -20,11 +22,24 @@ class MobileOrientation {
     setupOrientationDetection() {
         const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
         const isSafari = /Safari/.test(navigator.userAgent) && !/Chrome/.test(navigator.userAgent);
+ 
+        this.checkInitialOrientation();
         
         if (isIOS && isSafari) {
             this.setupIOSOrientationDetection();
         } else {
             this.setupStandardOrientationDetection();
+        }
+    }
+
+    /**
+     * Checks initial orientation and confirms if already in landscape
+     * @private
+     */
+    checkInitialOrientation() {
+        const isPortrait = this.detectPortraitOrientation();
+        if (!isPortrait) {
+            this.orientationConfirmed = true;
         }
     }
 
@@ -71,10 +86,16 @@ class MobileOrientation {
         this.isPortrait = isPortrait;
         this.showPortraitWarning = isPortrait;
         
+        this.orientationConfirmed = false;
+  
+        setTimeout(() => {
+            this.orientationConfirmed = true;
+            this.updateOrientationUI();
+        }, this.orientationCheckDelay);
+        
         if (this.game.mobileCanvas) {
             this.game.mobileCanvas.resizeCanvas();
         }
-        this.updateOrientationUI();
     }
 
     /**
@@ -111,7 +132,29 @@ class MobileOrientation {
         
         const controls = document.getElementById('mobile-controls');
         if (controls) {
-            controls.style.display = this.showPortraitWarning ? 'none' : 'flex';
+            if (this.orientationConfirmed && !this.showPortraitWarning) {
+                controls.style.display = 'flex';
+            } else {
+                controls.style.display = 'none';
+            }
+        }
+
+        const pauseButton = document.getElementById('mobile-pause');
+        if (pauseButton) {
+            if (this.orientationConfirmed && !this.showPortraitWarning) {
+                pauseButton.style.display = 'block';
+            } else {
+                pauseButton.style.display = 'none';
+            }
+        }
+
+        const enterButton = document.getElementById('enter-btn');
+        if (enterButton) {
+            if (this.orientationConfirmed && !this.showPortraitWarning) {
+                enterButton.style.display = 'flex';
+            } else {
+                enterButton.style.display = 'none';
+            }
         }
     }
 
@@ -120,16 +163,18 @@ class MobileOrientation {
      * @public
      */
     update() {
-        const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
-        const isSafari = /Safari/.test(navigator.userAgent) && !/Chrome/.test(navigator.userAgent);
-        
-        if (isIOS && isSafari) {
-            if (this.game.frameCount % 10 === 0) {
-                this.updateOrientation();
-            }
-        } else {
-            if (this.game.frameCount % 30 === 0) {
-                this.updateOrientation();
+        if (!this.orientationConfirmed) {
+            const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+            const isSafari = /Safari/.test(navigator.userAgent) && !/Chrome/.test(navigator.userAgent);
+            
+            if (isIOS && isSafari) {
+                if (this.game.frameCount % 10 === 0) {
+                    this.updateOrientation();
+                }
+            } else {
+                if (this.game.frameCount % 30 === 0) {
+                    this.updateOrientation();
+                }
             }
         }
     }
