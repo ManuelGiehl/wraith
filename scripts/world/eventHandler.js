@@ -80,7 +80,9 @@ class EventHandler {
         });
 
         this.game.canvas.addEventListener('touchstart', (e) => {
-            e.preventDefault();
+            if (e.cancelable) {
+                e.preventDefault();
+            }
             this.handleMouseClick(e);
         });
     }

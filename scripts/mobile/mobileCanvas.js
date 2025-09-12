@@ -202,7 +202,9 @@ class MobileCanvas {
      */
     setupEnterButtonTouchEvent(enterBtn) {
         enterBtn.addEventListener('touchstart', (e) => {
-            e.preventDefault();
+            if (e.cancelable) {
+                e.preventDefault();
+            }
             if (this.game.isPaused) {
                 this.game.eventHandler.handlePauseButtonClick();
                 return;

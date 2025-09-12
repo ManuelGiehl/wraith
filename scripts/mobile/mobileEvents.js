@@ -48,12 +48,16 @@ class MobileEvents {
      */
     setupButtonTouchEvents(button, action) {
         button.addEventListener('touchstart', (e) => {
-            e.preventDefault();
+            if (e.cancelable) {
+                e.preventDefault();
+            }
             this.handleTouchStart(action);
         });
         
         button.addEventListener('touchend', (e) => {
-            e.preventDefault();
+            if (e.cancelable) {
+                e.preventDefault();
+            }
             this.handleTouchEnd(action);
         });
     }
