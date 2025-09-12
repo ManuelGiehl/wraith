@@ -40,6 +40,8 @@ class StartScreenRenderer {
 
         this.handleIntroPhases(centerX, centerY);
         this.resetTextAlignment();
+  
+        MenuRenderer.clearCloseButtonPosition();
     }
 
     /**
@@ -196,6 +198,10 @@ class StartScreenRenderer {
             this.startScreen.game.ctx, 
             this.startScreen.game.width, 
             this.startScreen.game.height);
+
+        if (this.startScreen.showControls) {
+            this.drawCloseButton('controls');
+        }
     }
 
     /**
@@ -211,18 +217,10 @@ class StartScreenRenderer {
                 this.startScreen.game.width, 
                 this.startScreen.game.height);
         }
-    }
 
-    /**
-     * Draws impressum screen
-     * @private
-     */
-    drawImpressum() {
-        this.drawLayerAnimation();
-        TemplateManager.drawImpressum(
-            this.startScreen.game.ctx, 
-            this.startScreen.game.width, 
-            this.startScreen.game.height);
+        if (this.startScreen.showAudio) {
+            this.drawCloseButton('audio');
+        }
     }
 
     /**
@@ -238,6 +236,29 @@ class StartScreenRenderer {
     }
 
     /**
+     * Draws close button for modals
+     * @private
+     * @param {string} modalType - Type of modal ('controls', 'audio', 'impressum')
+     */
+    drawCloseButton(modalType) {
+        const centerX = this.startScreen.game.width / 2;
+        const centerY = this.startScreen.game.height / 2;
+        const modalWidth = 700;
+        const modalHeight = 500;
+        const modalX = centerX - 350;
+        const modalY = centerY - 250;
+
+        MenuRenderer.drawCloseButton(
+            this.startScreen.game.ctx,
+            modalX,
+            modalY,
+            modalWidth,
+            modalHeight,
+            modalType
+        );
+    }
+
+    /**
      * Draws impressum screen
      * @private
      */
@@ -247,5 +268,9 @@ class StartScreenRenderer {
             this.startScreen.game.ctx, 
             this.startScreen.game.width, 
             this.startScreen.game.height);
+ 
+        if (this.startScreen.showImpressum) {
+            this.drawCloseButton('impressum');
+        }
     }
 }

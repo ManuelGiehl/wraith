@@ -348,6 +348,12 @@ html, body {
     }
 }
 
+@media (max-width: 480px) {
+}
+
+@media (max-width: 360px) {
+}
+
 @media (hover: none) and (pointer: coarse) {
     .mobile-button, .dpad-button {
         -webkit-tap-highlight-color: transparent;

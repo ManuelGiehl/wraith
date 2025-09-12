@@ -13,6 +13,8 @@ class GameOverScreenSystem {
         this.animationTimer = 0;
         this.selectedButton = 0;
         this.buttons = ['Restart Game', 'Back to Main Menu'];
+        this.lastTouchTime = 0;
+        this.touchDebounceDelay = 300;
     }
 
     /**
@@ -91,18 +93,85 @@ class GameOverScreenSystem {
     }
 
     /**
+     * Handles touch events for game over screen buttons
+     * @public
+     * @param {TouchEvent} e - Touch event
+     */
+    handleTouchStart(e) {
+        if (!this.isVisible) return;
+        const currentTime = Date.now();
+        if (currentTime - this.lastTouchTime < this.touchDebounceDelay) {
+            return;
+        }
+        this.lastTouchTime = currentTime;
+        
+        e.preventDefault();
+
+        let touchX, touchY;
+
+        const canvas = this.game.canvas;
+        const rect = canvas.getBoundingClientRect();
+        
+        if (e.touches && e.touches[0]) {
+            const touch = e.touches[0];
+            touchX = touch.clientX - rect.left;
+            touchY = touch.clientY - rect.top;
+        } else if (e.clientX !== undefined && e.clientY !== undefined) {
+            touchX = e.clientX - rect.left;
+            touchY = e.clientY - rect.top;
+        } else {
+            console.error('Unbekanntes Touch-Event-Format:', e);
+            return;
+        }
+
+        const scaleX = canvas.width / rect.width;
+        const scaleY = canvas.height / rect.height;
+        touchX *= scaleX;
+        touchY *= scaleY;
+        
+        
+        this.handleButtonTouch(touchX, touchY);
+    }
+
+    /**
+     * Handles button touch detection for game over screen
+     * @private
+     * @param {number} touchX - Touch X coordinate
+     * @param {number} touchY - Touch Y coordinate
+     */
+    handleButtonTouch(touchX, touchY) {
+        const centerX = this.game.width / 2;
+        const centerY = this.game.height / 2;
+
+
+        this.buttons.forEach((button, index) => {
+            const buttonRect = this.getButtonRect(button, centerX, centerY, index);
+            
+            
+            if (touchX >= buttonRect.x && touchX <= buttonRect.x + buttonRect.width &&
+                touchY >= buttonRect.y && touchY <= buttonRect.y + buttonRect.height) {
+                
+                this.selectedButton = index;
+                this.handleButtonSelect();
+                return;
+            }
+        });
+        
+    }
+
+    /**
      * Gets button rectangle for collision detection
      */
     getButtonRect(button, centerX, centerY, index) {
         const y = centerY + 100 + (index * 60);
         const textWidth = this.game.ctx.measureText(button).width;
-        const padding = 20;
+        const padding = 60;
         
         return {
             x: centerX - textWidth/2 - padding,
-            y: y - 25,
+            y: y - 40,
             width: textWidth + padding * 2,
-            height: 50
+            height: 80
         };
     }
 

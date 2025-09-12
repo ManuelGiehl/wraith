@@ -13,6 +13,8 @@ class EndScreenSystem {
         this.animationTimer = 0;
         this.selectedButton = 0;
         this.buttons = ['Restart Game', 'Back to Main Menu'];
+        this.lastTouchTime = 0;
+        this.touchDebounceDelay = 300;
     }
 
     /**
@@ -85,6 +87,80 @@ class EndScreenSystem {
                 this.handleButtonSelect();
             }
         });
+    }
+
+    /**
+     * Handles touch events for end screen buttons
+     * @public
+     * @param {TouchEvent} e - Touch event
+     */
+    handleTouchStart(e) {
+        if (!this.isVisible) return;
+
+        const currentTime = Date.now();
+        if (currentTime - this.lastTouchTime < this.touchDebounceDelay) {
+            return;
+        }
+        this.lastTouchTime = currentTime;
+        
+        e.preventDefault();
+
+        let touchX, touchY;
+
+        const canvas = this.game.canvas;
+        const rect = canvas.getBoundingClientRect();
+        
+        if (e.touches && e.touches[0]) {
+            const touch = e.touches[0];
+            touchX = touch.clientX - rect.left;
+            touchY = touch.clientY - rect.top;
+        } else if (e.clientX !== undefined && e.clientY !== undefined) {
+            touchX = e.clientX - rect.left;
+            touchY = e.clientY - rect.top;
+        } else {
+            console.error('Unbekanntes Touch-Event-Format:', e);
+            return;
+        }
+ 
+        const scaleX = canvas.width / rect.width;
+        const scaleY = canvas.height / rect.height;
+        touchX *= scaleX;
+        touchY *= scaleY;
+        
+        
+        this.handleButtonTouch(touchX, touchY);
+    }
+
+    /**
+     * Handles button touch detection for end screen
+     * @private
+     * @param {number} touchX - Touch X coordinate
+     * @param {number} touchY - Touch Y coordinate
+     */
+    handleButtonTouch(touchX, touchY) {
+        const centerX = this.game.width / 2;
+        const centerY = this.game.height / 2;
+
+
+        this.buttons.forEach((button, index) => {
+            const y = centerY + 100 + (index * 60);
+            const textWidth = this.game.ctx.measureText(button).width;
+            const padding = 60; 
+            
+            const buttonX = centerX - textWidth/2 - padding;
+            const buttonY = y - 40;
+            const buttonWidth = textWidth + padding * 2;
+            const buttonHeight = 80;
+            
+            if (touchX >= buttonX && touchX <= buttonX + buttonWidth &&
+                touchY >= buttonY && touchY <= buttonY + buttonHeight) {
+                
+                this.selectedButton = index;
+                this.handleButtonSelect();
+                return;
+            }
+        });
+        
     }
 
     /**

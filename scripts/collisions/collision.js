@@ -263,7 +263,7 @@ class CollisionSystem {
         
             const isGolemAttacking = golem.isAttacking && golem.attackTimer > 0 && golem.attackTimer <= 5;
             
-            if (collision && isGolemAttacking && !golem.hasDealtDamage && isWraithGrounded) {
+            if (collision && isGolemAttacking && !golem.hasDealtDamage) {
                 this.damagePlayer(20);
                 this.playWraithHurtSound();
                 golem.hasDealtDamage = true;
@@ -364,11 +364,11 @@ class CollisionSystem {
      */
     getObjectHitbox(obj) {
         if (obj.type === 'golem') {
-            const hitboxWidth = obj.width * 0.35;
-            const hitboxHeight = obj.height * 0.25;
+            const hitboxWidth = obj.width * 0.8;
+            const hitboxHeight = obj.height * 0.8;
             return {
                 x: obj.x + (obj.width - hitboxWidth) / 2,
-                y: obj.y + (obj.height - hitboxHeight) / 2 + 5,
+                y: obj.y + (obj.height - hitboxHeight) / 2,
                 width: hitboxWidth,
                 height: hitboxHeight
             };

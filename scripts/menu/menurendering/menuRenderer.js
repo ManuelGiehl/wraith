@@ -19,6 +19,8 @@ class MenuRenderer {
         ctx.globalAlpha = menuAlpha;
         ctx.textAlign = 'center';
         
+        this.buttonCoordinates = [];
+        
         options.forEach((option, index) => {
             this.drawSingleMenuOption(ctx, option, index, centerX, centerY, selectedOption, hoveredOption);
         });
@@ -47,6 +49,19 @@ class MenuRenderer {
         
         ctx.font = fontSize;
         ctx.fillStyle = color;
+
+        const textMetrics = ctx.measureText(option);
+        const textWidth = textMetrics.width;
+        const textHeight = 40;
+  
+        this.buttonCoordinates.push({
+            x: centerX - textWidth / 2 - 50, 
+            y: y - textHeight - 10, 
+            width: textWidth + 100, 
+            height: textHeight + 40,
+            label: option,
+            index: index
+        });
         
         TextRenderer.applyTextShadow(ctx);
         ctx.fillText(option, centerX, y);
@@ -75,5 +90,84 @@ class MenuRenderer {
      */
     static getMenuOptionColor(isSelected, isHovered) {
         return (isSelected || isHovered) ? '#00aaff' : '#ffffff';
+    }
+
+    /**
+     * Gets button coordinates for touch detection
+     * @public
+     * @returns {Array} Array of button coordinate objects
+     */
+    static getButtonCoordinates() {
+        return this.buttonCoordinates || [];
+    }
+
+    /**
+     * Draws close button for modals
+     * @public
+     * @param {CanvasRenderingContext2D} ctx - The canvas rendering context
+     * @param {number} modalX - Modal X position
+     * @param {number} modalY - Modal Y position
+     * @param {number} modalWidth - Modal width
+     * @param {number} modalHeight - Modal height
+     * @param {string} modalType - Type of modal ('controls', 'audio', 'impressum')
+     */
+    static drawCloseButton(ctx, modalX, modalY, modalWidth, modalHeight, modalType) {
+        ctx.save();
+
+        const buttonSize = 30;
+        const margin = 20;
+        const x = modalX + modalWidth - buttonSize - margin;
+        const y = modalY + 20;
+
+        this.closeButtonPosition = {
+            x: x,
+            y: y,
+            width: buttonSize,
+            height: buttonSize,
+            type: modalType
+        };
+        
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.1)';
+        ctx.strokeStyle = '#ffffff';
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.arc(x + buttonSize/2, y + buttonSize/2, buttonSize/2, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.stroke();
+        
+
+        ctx.strokeStyle = '#ffffff';
+        ctx.lineWidth = 3;
+        ctx.lineCap = 'round';
+        
+        const centerX = x + buttonSize/2;
+        const centerY = y + buttonSize/2;
+        const crossSize = buttonSize * 0.4;
+        
+        ctx.beginPath();
+        ctx.moveTo(centerX - crossSize/2, centerY - crossSize/2);
+        ctx.lineTo(centerX + crossSize/2, centerY + crossSize/2);
+        ctx.moveTo(centerX + crossSize/2, centerY - crossSize/2);
+        ctx.lineTo(centerX - crossSize/2, centerY + crossSize/2);
+        ctx.stroke();
+        
+        ctx.restore();
+    }
+
+    /**
+     * Gets close button position for touch detection
+     * @public
+     * @returns {Object|null} Close button position object or null
+     */
+    static getCloseButtonPosition() {
+        return this.closeButtonPosition || null;
+    }
+
+    /**
+     * Clears close button position (call when no modal is open)
+     * @public
+     */
+    static clearCloseButtonPosition() {
+        this.closeButtonPosition = null;
     }
 }

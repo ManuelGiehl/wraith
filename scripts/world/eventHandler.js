@@ -83,7 +83,12 @@ class EventHandler {
             if (e.cancelable) {
                 e.preventDefault();
             }
-            this.handleMouseClick(e);
+            if (this.game.mobileSystem && this.game.mobileSystem.mobileEvents) {
+
+                this.game.mobileSystem.mobileEvents.handleGeneralTouch(e);
+            } else {
+                this.handleTouchStart(e);
+            }
         });
     }
 
@@ -101,6 +106,23 @@ class EventHandler {
             this.game.gameOverScreenSystem.handleMouseClick(e);
         } else if (this.game.isPaused) {
             this.handlePauseScreenClick(e);
+        }
+    }
+
+    /**
+     * Handles touch start events with screen priority system
+     * @param {TouchEvent} e - The touch event
+     * @private
+     */
+    handleTouchStart(e) {
+        if (this.game.startScreenSystem.isVisible) {
+            this.game.startScreenSystem.events.handleTouchStart(e);
+        } else if (this.game.endScreenSystem.isVisible) {
+            this.game.endScreenSystem.handleTouchStart(e);
+        } else if (this.game.gameOverScreenSystem.isVisible) {
+            this.game.gameOverScreenSystem.handleTouchStart(e);
+        } else if (this.game.isPaused) {
+            this.handlePauseScreenTouch(e);
         }
     }
 
@@ -208,6 +230,44 @@ class EventHandler {
         }
         
         this.resetToMainMenu();
+    }
+
+    /**
+     * Handles touch events for pause screen
+     * @param {TouchEvent} e - Touch event
+     * @private
+     */
+    handlePauseScreenTouch(e) {
+        e.preventDefault();
+
+        let touchX, touchY;
+
+        const canvas = this.game.canvas;
+        const rect = canvas.getBoundingClientRect();
+        
+        if (e.touches && e.touches[0]) {
+            const touch = e.touches[0];
+            touchX = touch.clientX - rect.left;
+            touchY = touch.clientY - rect.top;
+        } else if (e.clientX !== undefined && e.clientY !== undefined) {
+            touchX = e.clientX - rect.left;
+            touchY = e.clientY - rect.top;
+        } else {
+            console.error('Unbekanntes Touch-Event-Format:', e);
+            return;
+        }
+
+        const scaleX = canvas.width / rect.width;
+        const scaleY = canvas.height / rect.height;
+        touchX *= scaleX;
+        touchY *= scaleY;
+        
+        const buttonBounds = this.getPauseButtonBounds();
+        const mousePos = { x: touchX, y: touchY };
+        
+        if (this.isClickOnPauseButton(mousePos, buttonBounds)) {
+            this.handlePauseButtonClick();
+        }
     }
 
     /**

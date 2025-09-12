@@ -263,7 +263,6 @@ class MobileCanvas {
             document.documentElement.webkitRequestFullscreen();
         } else if (document.documentElement.requestFullscreen) {
             document.documentElement.requestFullscreen().catch(err => {
-                console.log('Fullscreen not available');
             });
         } else if (document.documentElement.msRequestFullscreen) {
             document.documentElement.msRequestFullscreen();

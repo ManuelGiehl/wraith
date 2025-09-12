@@ -83,14 +83,6 @@ class MobileEvents {
      * @private
      */
     setupCanvasTouchEvents() {
-        this.game.canvas.addEventListener('touchstart', (e) => {
-            this.handleGeneralTouch(e);
-        });
-        
-        this.game.canvas.addEventListener('touchend', (e) => {
-            this.handleGeneralTouchEnd(e);
-        });
-        
         this.game.canvas.addEventListener('mousedown', (e) => {
             this.handleGeneralMouseClick(e);
         });
@@ -290,12 +282,15 @@ class MobileEvents {
      * Creates click event from touch event
      * @private
      * @param {Event} e - Touch event
-     * @returns {Object} Click event object
+     * @returns {Object} Touch event object
      */
     createClickEvent(e) {
         return {
-            clientX: e.touches[0].clientX,
-            clientY: e.touches[0].clientY,
+            touches: [{
+                clientX: e.touches[0].clientX,
+                clientY: e.touches[0].clientY
+            }],
+            target: e.target,
             preventDefault: () => e.preventDefault()
         };
     }
@@ -306,11 +301,14 @@ class MobileEvents {
      */
     handleMenuTouch(clickEvent) {
         if (this.game.startScreenSystem.isVisible) {
-            this.game.startScreenSystem.handleMouseClick(clickEvent);
+            // Verwende die neuen Touch-Handler für bessere Mobile-Unterstützung
+            this.game.startScreenSystem.events.handleTouchStart(clickEvent);
         } else if (this.game.endScreenSystem.isVisible) {
-            this.game.endScreenSystem.handleMouseClick(clickEvent);
+            this.game.endScreenSystem.handleTouchStart(clickEvent);
         } else if (this.game.gameOverScreenSystem.isVisible) {
-            this.game.gameOverScreenSystem.handleMouseClick(clickEvent);
+            this.game.gameOverScreenSystem.handleTouchStart(clickEvent);
+        } else if (this.game.isPaused) {
+            this.game.eventHandler.handlePauseScreenTouch(clickEvent);
         }
     }
 
@@ -320,11 +318,6 @@ class MobileEvents {
      */
     handleGeneralTouchEnd(e) {
         if (this.mobileOrientation.getShowPortraitWarning()) return;
-        
-        if (!this.isMenuScreen()) return;
-        
-        const clickEvent = this.createTouchEndClickEvent(e);
-        this.handleMenuTouch(clickEvent);
     }
 
     /**

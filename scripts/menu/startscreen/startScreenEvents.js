@@ -11,35 +11,15 @@ class StartScreenEvents {
     constructor(startScreen) {
         this.startScreen = startScreen;
         this.setupCloseButtonEvents();
+        this.lastTouchTime = 0;
+        this.touchDebounceDelay = 300; // 300ms Debounce
     }
 
     /**
      * Sets up event listeners for close buttons
      * @private
      */
-    setupCloseButtonEvents() {
-        const closeControlsBtn = document.getElementById('closeControlsBtn');
-        const closeAudioBtn = document.getElementById('closeAudioBtn');
-        const closeImpressumBtn = document.getElementById('closeImpressumBtn');
-        
-        if (closeControlsBtn) {
-            closeControlsBtn.addEventListener('click', () => {
-                this.startScreen.closeModal('controls');
-            });
-        }
-        
-        if (closeAudioBtn) {
-            closeAudioBtn.addEventListener('click', () => {
-                this.startScreen.closeModal('audio');
-            });
-        }
-        
-        if (closeImpressumBtn) {
-            closeImpressumBtn.addEventListener('click', () => {
-                this.startScreen.closeModal('impressum');
-            });
-        }
-    }
+    setupCloseButtonEvents() {}
 
     /**
      * Handles mouse move events
@@ -53,7 +33,7 @@ class StartScreenEvents {
         
         if (this.startScreen.showGameTooltip) {
             this.handleGameTooltipHover();
-        } else if (!this.startScreen.showControls && !this.startScreen.showAudio && !this.startScreen.showImpressum) {
+        } else {
             this.handleMenuHover();
         }
     }
@@ -122,6 +102,22 @@ class StartScreenEvents {
         const centerX = this.startScreen.game.width / 2;
         const centerY = this.startScreen.game.height / 2;
         let isHoveringOption = false;
+
+        const closeButton = MenuRenderer.getCloseButtonPosition();
+        
+        if (closeButton) {
+            const mouseX = this.startScreen.mouseX;
+            const mouseY = this.startScreen.mouseY;
+            
+            if (mouseX >= closeButton.x && 
+                mouseX <= closeButton.x + closeButton.width && 
+                mouseY >= closeButton.y && 
+                mouseY <= closeButton.y + closeButton.height) {
+                
+                this.setCursor('pointer');
+                return;
+            }
+        }
         
         this.startScreen.options.forEach((option, index) => {
             if (this.checkOptionHover(option, index, centerX, centerY)) {
@@ -130,6 +126,19 @@ class StartScreenEvents {
         });
 
         this.setCursor(isHoveringOption ? 'pointer' : 'default');
+    }
+
+    /**
+     * Checks if point is inside rectangle
+     * @private
+     * @param {number} x - Point X coordinate
+     * @param {number} y - Point Y coordinate
+     * @param {Object} rect - Rectangle object with x, y, width, height
+     * @returns {boolean} True if point is inside rectangle
+     */
+    isPointInRect(x, y, rect) {
+        return x >= rect.x && x <= rect.x + rect.width && 
+               y >= rect.y && y <= rect.y + rect.height;
     }
 
     /**
@@ -176,7 +185,7 @@ class StartScreenEvents {
                 return;
             }
         }
-        if (!this.startScreen.showControls && !this.startScreen.showAudio && !this.startScreen.showImpressum && !this.startScreen.showGameTooltip) {
+        if (!this.startScreen.showGameTooltip) {
             this.handleMenuClick();
         }
     }
@@ -207,9 +216,124 @@ class StartScreenEvents {
      * @private
      */
     handleMenuClick() {
+        const closeButton = MenuRenderer.getCloseButtonPosition();
+        if (closeButton) {
+            const mouseX = this.startScreen.mouseX;
+            const mouseY = this.startScreen.mouseY;
+            
+            if (mouseX >= closeButton.x && 
+                mouseX <= closeButton.x + closeButton.width && 
+                mouseY >= closeButton.y && 
+                mouseY <= closeButton.y + closeButton.height) {
+                
+                this.startScreen.closeModal(closeButton.type);
+                return;
+            }
+        }
+        
         if (this.startScreen.hoveredOption >= 0) {
             this.startScreen.selectedOption = this.startScreen.hoveredOption;
             this.startScreen.selectOption();
+        }
+    }
+
+    /**
+     * Handles touch events for canvas buttons
+     * @public
+     * @param {TouchEvent} e - Touch event
+     */
+    handleTouchStart(e) {
+        if (!this.startScreen.isVisible) return;
+
+        const currentTime = Date.now();
+        if (currentTime - this.lastTouchTime < this.touchDebounceDelay) {
+            return;
+        }
+        this.lastTouchTime = currentTime;
+        
+        e.preventDefault(); 
+
+        let touchX, touchY;
+        const canvas = this.startScreen.game.canvas;
+        const rect = canvas.getBoundingClientRect();
+        
+        if (e.touches && e.touches[0]) {
+
+            const touch = e.touches[0];
+            touchX = touch.clientX - rect.left;
+            touchY = touch.clientY - rect.top;
+        } else if (e.clientX !== undefined && e.clientY !== undefined) {
+
+            touchX = e.clientX - rect.left;
+            touchY = e.clientY - rect.top;
+        } else {
+            console.error('Unbekanntes Touch-Event-Format:', e);
+            return;
+        }
+
+        const scaleX = canvas.width / rect.width;
+        const scaleY = canvas.height / rect.height;
+        touchX *= scaleX;
+        touchY *= scaleY;
+        
+        
+        if (this.startScreen.showGameTooltip) {
+            this.handleGameTooltipTouch(touchX, touchY);
+        } else {
+            this.handleMenuTouch(touchX, touchY);
+        }
+    }
+
+    /**
+     * Handles menu touch detection
+     * @private
+     * @param {number} touchX - Touch X coordinate
+     * @param {number} touchY - Touch Y coordinate
+     */
+    handleMenuTouch(touchX, touchY) {
+        const closeButton = MenuRenderer.getCloseButtonPosition();
+        if (closeButton) {
+            if (touchX >= closeButton.x && 
+                touchX <= closeButton.x + closeButton.width && 
+                touchY >= closeButton.y && 
+                touchY <= closeButton.y + closeButton.height) {
+                
+                this.startScreen.closeModal(closeButton.type);
+                return;
+            }
+        }
+
+        const buttons = MenuRenderer.getButtonCoordinates();
+        
+        for (let button of buttons) {
+            if (this.isPointInRect(touchX, touchY, button)) {
+                this.startScreen.selectedOption = button.index;
+                this.startScreen.selectOption();
+                return;
+            }
+        }
+    }
+
+    /**
+     * Handles game tooltip touch detection
+     * @private
+     * @param {number} touchX - Touch X coordinate
+     * @param {number} touchY - Touch Y coordinate
+     */
+    handleGameTooltipTouch(touchX, touchY) {
+        const centerX = this.startScreen.game.width / 2;
+        const centerY = this.startScreen.game.height / 2;
+        const buttonY = centerY + 200;
+        const buttonWidth = 300;
+        const buttonHeight = 80; 
+        
+        
+        if (touchX >= centerX - buttonWidth/2 && 
+            touchX <= centerX + buttonWidth/2 && 
+            touchY >= buttonY - buttonHeight/2 && 
+            touchY <= buttonY + buttonHeight/2) {
+            
+            this.startScreen.startGame();
         }
     }
 
@@ -260,7 +384,6 @@ class StartScreenEvents {
             this.startScreen.showAudio = false;
             this.startScreen.showImpressum = false;
             this.startScreen.selectedOption = -1;
-            this.startScreen.hideAllCloseButtons();
         }
     }
 
