@@ -166,7 +166,7 @@ class MobileCanvas {
             border-radius: 8px;
             width: 60px;
             height: 60px;
-            font-size: 16px;
+            font-size: 24px;
             font-weight: bold;
             cursor: pointer;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
