@@ -52,14 +52,14 @@ class MobileEvents {
                 e.preventDefault();
             }
             this.handleTouchStart(action);
-        });
+        }, { passive: false });
         
         button.addEventListener('touchend', (e) => {
             if (e.cancelable) {
                 e.preventDefault();
             }
             this.handleTouchEnd(action);
-        });
+        }, { passive: false });
     }
 
     /**

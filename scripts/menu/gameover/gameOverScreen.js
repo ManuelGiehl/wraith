@@ -15,6 +15,20 @@ class GameOverScreenSystem {
         this.buttons = ['Restart Game', 'Back to Main Menu'];
         this.lastTouchTime = 0;
         this.touchDebounceDelay = 300;
+        this.setupTouchEvents();
+    }
+
+    /**
+     * Sets up touch events for mobile devices
+     * @private
+     */
+    setupTouchEvents() {
+        this.game.canvas.addEventListener('touchstart', (e) => {
+            if (e.cancelable) {
+                e.preventDefault();
+            }
+            this.handleTouchStart(e);
+        }, { passive: false });
     }
 
     /**
@@ -104,8 +118,6 @@ class GameOverScreenSystem {
             return;
         }
         this.lastTouchTime = currentTime;
-        
-        e.preventDefault();
 
         let touchX, touchY;
 

@@ -253,9 +253,7 @@ class StartScreenEvents {
         if (currentTime - this.lastTouchTime < this.touchDebounceDelay) {
             return;
         }
-        this.lastTouchTime = currentTime;
-        
-        e.preventDefault(); 
+        this.lastTouchTime = currentTime; 
 
         let touchX, touchY;
         const canvas = this.startScreen.game.canvas;

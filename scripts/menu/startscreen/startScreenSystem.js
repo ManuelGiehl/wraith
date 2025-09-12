@@ -75,6 +75,20 @@ class StartScreenSystem {
         this.events = new StartScreenEvents(this);
         this.intro = new StartScreenIntro(this);
         this.renderer = new StartScreenRenderer(this);
+        this.setupTouchEvents();
+    }
+
+    /**
+     * Sets up touch events for mobile devices
+     * @private
+     */
+    setupTouchEvents() {
+        this.game.canvas.addEventListener('touchstart', (e) => {
+            if (e.cancelable) {
+                e.preventDefault();
+            }
+            this.events.handleTouchStart(e);
+        }, { passive: false });
     }
 
     /**

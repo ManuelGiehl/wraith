@@ -83,13 +83,10 @@ class EventHandler {
             if (e.cancelable) {
                 e.preventDefault();
             }
-            if (this.game.mobileSystem && this.game.mobileSystem.mobileEvents) {
-
-                this.game.mobileSystem.mobileEvents.handleGeneralTouch(e);
-            } else {
-                this.handleTouchStart(e);
+            if (this.game.isPaused) {
+                this.handlePauseScreenTouch(e);
             }
-        });
+        }, { passive: false });
     }
 
     /**
@@ -109,22 +106,6 @@ class EventHandler {
         }
     }
 
-    /**
-     * Handles touch start events with screen priority system
-     * @param {TouchEvent} e - The touch event
-     * @private
-     */
-    handleTouchStart(e) {
-        if (this.game.startScreenSystem.isVisible) {
-            this.game.startScreenSystem.events.handleTouchStart(e);
-        } else if (this.game.endScreenSystem.isVisible) {
-            this.game.endScreenSystem.handleTouchStart(e);
-        } else if (this.game.gameOverScreenSystem.isVisible) {
-            this.game.gameOverScreenSystem.handleTouchStart(e);
-        } else if (this.game.isPaused) {
-            this.handlePauseScreenTouch(e);
-        }
-    }
 
     /**
      * Handles mouse down events for spell casting
@@ -238,7 +219,9 @@ class EventHandler {
      * @private
      */
     handlePauseScreenTouch(e) {
-        e.preventDefault();
+        if (e.cancelable) {
+            e.preventDefault();
+        }
 
         let touchX, touchY;
 
