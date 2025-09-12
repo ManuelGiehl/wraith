@@ -46,6 +46,17 @@ class TemplateManager {
     }
 
     /**
+     * Draws impressum screen
+     * @public
+     * @param {CanvasRenderingContext2D} ctx - The canvas rendering context
+     * @param {number} width - Canvas width
+     * @param {number} height - Canvas height
+     */
+    static drawImpressum(ctx, width, height) {
+        UIRenderer.drawImpressum(ctx, width, height);
+    }
+
+    /**
      * Draws game tooltip with instructions
      * @public
      * @param {CanvasRenderingContext2D} ctx - The canvas rendering context
@@ -66,17 +77,6 @@ class TemplateManager {
      */
     static drawHowToPlay(ctx, width, height, hoveredStartButton = false) {
         UIRenderer.drawHowToPlay(ctx, width, height, hoveredStartButton);
-    }
-
-    /**
-     * Draws impressum screen
-     * @public
-     * @param {CanvasRenderingContext2D} ctx - The canvas rendering context
-     * @param {number} width - Canvas width
-     * @param {number} height - Canvas height
-     */
-    static drawImpressum(ctx, width, height) {
-        UIRenderer.drawImpressum(ctx, width, height);
     }
 
     /**

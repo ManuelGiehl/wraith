@@ -112,7 +112,8 @@ class GolemSystem {
             isDying: false, isHurt: false, isAttacking: false,
             hurtTimer: 0, attackTimer: 0, dyingFrame: 0, attackCooldown: 0,
             facingRight: true, hasDealtDamage: false, isElite: config.isElite,
-            lastUltimateHit: -1, potionDropped: false
+            lastUltimateHit: -1, potionDropped: false,
+            type: 'golem' 
         };
     }
 
@@ -406,10 +407,10 @@ class GolemSystem {
      * @param {Object} screenPos - Screen position of golem
      */
     drawGolemDebugHitbox(golem, screenPos) {
-        const hitboxWidth = golem.width * 0.3;
-        const hitboxHeight = golem.height * 0.2;
+        const hitboxWidth = golem.width * 0.35;
+        const hitboxHeight = golem.height * 0.25;
         const hitboxX = screenPos.x + (golem.width - hitboxWidth) / 2;
-        const hitboxY = screenPos.y + (golem.height - hitboxHeight) / 2;
+        const hitboxY = screenPos.y + (golem.height - hitboxHeight) / 2 + 5;
         
         this.game.ctx.strokeStyle = '#ff0000';
         this.game.ctx.lineWidth = 2;

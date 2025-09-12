@@ -214,6 +214,18 @@ class StartScreenRenderer {
     }
 
     /**
+     * Draws impressum screen
+     * @private
+     */
+    drawImpressum() {
+        this.drawLayerAnimation();
+        TemplateManager.drawImpressum(
+            this.startScreen.game.ctx, 
+            this.startScreen.game.width, 
+            this.startScreen.game.height);
+    }
+
+    /**
      * Draws game tooltip
      * @private
      */
@@ -230,6 +242,7 @@ class StartScreenRenderer {
      * @private
      */
     drawImpressum() {
+        this.drawLayerAnimation();
         TemplateManager.drawImpressum(
             this.startScreen.game.ctx, 
             this.startScreen.game.width, 

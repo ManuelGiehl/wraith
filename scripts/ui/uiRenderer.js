@@ -24,10 +24,6 @@ class UIRenderer {
 
     /**
      * Draws controls background and frames
-     * @private
-     * @param {CanvasRenderingContext2D} ctx - The canvas rendering context
-     * @param {number} centerX - Center X coordinate
-     * @param {number} centerY - Center Y coordinate
      */
     static drawControlsBackground(ctx, centerX, centerY) {
         ctx.fillStyle = 'rgba(10, 15, 25, 0.9)';
@@ -44,10 +40,6 @@ class UIRenderer {
 
     /**
      * Draws controls title with glow effect
-     * @private
-     * @param {CanvasRenderingContext2D} ctx - The canvas rendering context
-     * @param {number} centerX - Center X coordinate
-     * @param {number} centerY - Center Y coordinate
      */
     static drawControlsTitle(ctx, centerX, centerY) {
         ctx.shadowColor = '#4a90e2';
@@ -58,10 +50,6 @@ class UIRenderer {
 
     /**
      * Draws controls list
-     * @private
-     * @param {CanvasRenderingContext2D} ctx - The canvas rendering context
-     * @param {number} centerX - Center X coordinate
-     * @param {number} centerY - Center Y coordinate
      */
     static drawControlsList(ctx, centerX, centerY) {
         const controls = [
@@ -82,11 +70,6 @@ class UIRenderer {
 
     /**
      * Draws a single control item
-     * @private
-     * @param {CanvasRenderingContext2D} ctx - The canvas rendering context
-     * @param {Object} control - Control object with key and action
-     * @param {number} centerX - Center X coordinate
-     * @param {number} currentY - Current Y position
      */
     static drawSingleControl(ctx, control, centerX, currentY) {
         const keyWidth = 120;
@@ -101,12 +84,6 @@ class UIRenderer {
 
     /**
      * Draws control key box background
-     * @private
-     * @param {CanvasRenderingContext2D} ctx - The canvas rendering context
-     * @param {number} keyX - Key X position
-     * @param {number} keyY - Key Y position
-     * @param {number} keyWidth - Key width
-     * @param {number} keyHeight - Key height
      */
     static drawControlKeyBox(ctx, keyX, keyY, keyWidth, keyHeight) {
         ctx.fillStyle = 'rgba(42, 74, 107, 0.8)';
@@ -119,13 +96,6 @@ class UIRenderer {
 
     /**
      * Draws control key text
-     * @private
-     * @param {CanvasRenderingContext2D} ctx - The canvas rendering context
-     * @param {string} key - The key text
-     * @param {number} keyX - Key X position
-     * @param {number} keyY - Key Y position
-     * @param {number} keyWidth - Key width
-     * @param {number} keyHeight - Key height
      */
     static drawControlKeyText(ctx, key, keyX, keyY, keyWidth, keyHeight) {
         ctx.fillStyle = '#ffffff';
@@ -142,12 +112,6 @@ class UIRenderer {
 
     /**
      * Draws control action text
-     * @private
-     * @param {CanvasRenderingContext2D} ctx - The canvas rendering context
-     * @param {string} action - The action text
-     * @param {number} keyX - Key X position
-     * @param {number} keyY - Key Y position
-     * @param {number} keyWidth - Key width
      */
     static drawControlActionText(ctx, action, keyX, keyY, keyWidth) {
         ctx.fillStyle = '#ffffff';
@@ -164,10 +128,6 @@ class UIRenderer {
 
     /**
      * Draws controls back text
-     * @private
-     * @param {CanvasRenderingContext2D} ctx - The canvas rendering context
-     * @param {number} centerX - Center X coordinate
-     * @param {number} height - Canvas height
      */
     static drawControlsBackText(ctx, centerX, height) {
         ctx.shadowColor = '#4a90e2';
@@ -178,10 +138,6 @@ class UIRenderer {
 
     /**
      * Draws game tooltip with instructions
-     * @public
-     * @param {CanvasRenderingContext2D} ctx - The canvas rendering context
-     * @param {number} width - Canvas width
-     * @param {number} height - Canvas height
      */
     static drawGameTooltip(ctx, width, height) {
         const centerX = width / 2;
@@ -201,10 +157,6 @@ class UIRenderer {
 
     /**
      * Draws tooltip background with blue border
-     * @private
-     * @param {CanvasRenderingContext2D} ctx - The canvas rendering context
-     * @param {number} centerX - Center X coordinate
-     * @param {number} centerY - Center Y coordinate
      */
     static drawTooltipBackground(ctx, centerX, centerY) {
         const contentWidth = 700;
@@ -222,10 +174,6 @@ class UIRenderer {
 
     /**
      * Draws tooltip title
-     * @private
-     * @param {CanvasRenderingContext2D} ctx - The canvas rendering context
-     * @param {number} centerX - Center X coordinate
-     * @param {number} centerY - Center Y coordinate
      */
     static drawTooltipTitle(ctx, centerX, centerY) {
         TextRenderer.drawCenteredText(ctx, 'HOW TO PLAY', centerX, centerY - 180, '36px', 'Raleway', '#00aaff', 'bold');
@@ -233,10 +181,6 @@ class UIRenderer {
 
     /**
      * Draws tooltip goal section
-     * @private
-     * @param {CanvasRenderingContext2D} ctx - The canvas rendering context
-     * @param {number} centerX - Center X coordinate
-     * @param {number} centerY - Center Y coordinate
      */
     static drawTooltipGoal(ctx, centerX, centerY) {
         TextRenderer.drawCenteredText(ctx, 'MAIN GOAL:', centerX, centerY - 120, '24px', 'Raleway', '#ffffff', 'bold');
@@ -245,10 +189,6 @@ class UIRenderer {
 
     /**
      * Draws tooltip tips section
-     * @private
-     * @param {CanvasRenderingContext2D} ctx - The canvas rendering context
-     * @param {number} centerX - Center X coordinate
-     * @param {number} centerY - Center Y coordinate
      */
     static drawTooltipTips(ctx, centerX, centerY) {
         TextRenderer.drawCenteredText(ctx, 'TIPS:', centerX, centerY - 20, '24px', 'Raleway', '#ffffff', 'bold');
@@ -260,11 +200,6 @@ class UIRenderer {
 
     /**
      * Draws tooltip start information
-     * @private
-     * @param {CanvasRenderingContext2D} ctx - The canvas rendering context
-     * @param {number} centerX - Center X coordinate
-     * @param {number} centerY - Center Y coordinate
-     * @param {number} height - Canvas height
      */
     static drawTooltipStartInfo(ctx, centerX, centerY, height) {
         TextRenderer.drawCenteredText(ctx, 'START GAME', centerX, centerY + 170, '24px', 'Raleway', '#00aaff', 'bold');
@@ -274,11 +209,6 @@ class UIRenderer {
 
     /**
      * Draws how to play screen with button
-     * @public
-     * @param {CanvasRenderingContext2D} ctx - The canvas rendering context
-     * @param {number} width - Canvas width
-     * @param {number} height - Canvas height
-     * @param {boolean} hoveredStartButton - Whether start button is hovered
      */
     static drawHowToPlay(ctx, width, height, hoveredStartButton = false) {
         const centerX = width / 2;
@@ -295,10 +225,6 @@ class UIRenderer {
 
     /**
      * Draws how to play frame borders
-     * @private
-     * @param {CanvasRenderingContext2D} ctx - The canvas rendering context
-     * @param {number} centerX - Center X coordinate
-     * @param {number} centerY - Center Y coordinate
      */
     static drawHowToPlayFrame(ctx, centerX, centerY) {
         ctx.fillStyle = '#000000';
@@ -315,10 +241,6 @@ class UIRenderer {
 
     /**
      * Draws how to play title with glow
-     * @private
-     * @param {CanvasRenderingContext2D} ctx - The canvas rendering context
-     * @param {number} centerX - Center X coordinate
-     * @param {number} centerY - Center Y coordinate
      */
     static drawHowToPlayTitle(ctx, centerX, centerY) {
         ctx.shadowColor = '#4a90e2';
@@ -329,10 +251,6 @@ class UIRenderer {
 
     /**
      * Draws how to play goal section
-     * @private
-     * @param {CanvasRenderingContext2D} ctx - The canvas rendering context
-     * @param {number} centerX - Center X coordinate
-     * @param {number} centerY - Center Y coordinate
      */
     static drawHowToPlayGoal(ctx, centerX, centerY) {
         TextRenderer.drawCenteredText(ctx, 'MAIN GOAL:', centerX, centerY - 160, '24px', 'Raleway', '#4a90e2', 'bold');
@@ -341,10 +259,6 @@ class UIRenderer {
 
     /**
      * Draws how to play tips section
-     * @private
-     * @param {CanvasRenderingContext2D} ctx - The canvas rendering context
-     * @param {number} centerX - Center X coordinate
-     * @param {number} centerY - Center Y coordinate
      */
     static drawHowToPlayTips(ctx, centerX, centerY) {
         TextRenderer.drawCenteredText(ctx, 'TIPS:', centerX, centerY - 60, '24px', 'Raleway', '#4a90e2', 'bold');
@@ -365,11 +279,6 @@ class UIRenderer {
 
     /**
      * Draws how to play start button
-     * @private
-     * @param {CanvasRenderingContext2D} ctx - The canvas rendering context
-     * @param {number} centerX - Center X coordinate
-     * @param {number} centerY - Center Y coordinate
-     * @param {boolean} hoveredStartButton - Whether button is hovered
      */
     static drawHowToPlayButton(ctx, centerX, centerY, hoveredStartButton) {
         const buttonY = centerY + 200;
@@ -383,13 +292,6 @@ class UIRenderer {
 
     /**
      * Draws button background with hover effect
-     * @private
-     * @param {CanvasRenderingContext2D} ctx - The canvas rendering context
-     * @param {number} centerX - Center X coordinate
-     * @param {number} buttonY - Button Y position
-     * @param {number} buttonWidth - Button width
-     * @param {number} buttonHeight - Button height
-     * @param {boolean} hoveredStartButton - Whether button is hovered
      */
     static drawButtonBackground(ctx, centerX, buttonY, buttonWidth, buttonHeight, hoveredStartButton) {
         if (hoveredStartButton) {
@@ -405,13 +307,6 @@ class UIRenderer {
 
     /**
      * Draws button frame
-     * @private
-     * @param {CanvasRenderingContext2D} ctx - The canvas rendering context
-     * @param {number} centerX - Center X coordinate
-     * @param {number} buttonY - Button Y position
-     * @param {number} buttonWidth - Button width
-     * @param {number} buttonHeight - Button height
-     * @param {boolean} hoveredStartButton - Whether button is hovered
      */
     static drawButtonFrame(ctx, centerX, buttonY, buttonWidth, buttonHeight, hoveredStartButton) {
         ctx.strokeStyle = hoveredStartButton ? '#ffffff' : '#4a90e2';
@@ -421,10 +316,6 @@ class UIRenderer {
 
     /**
      * Draws button text
-     * @private
-     * @param {CanvasRenderingContext2D} ctx - The canvas rendering context
-     * @param {number} centerX - Center X coordinate
-     * @param {number} buttonY - Button Y position
      */
     static drawButtonText(ctx, centerX, buttonY) {
         ctx.textAlign = 'center';
@@ -436,28 +327,71 @@ class UIRenderer {
 
     /**
      * Draws impressum screen
-     * @public
-     * @param {CanvasRenderingContext2D} ctx - The canvas rendering context
-     * @param {number} width - Canvas width
-     * @param {number} height - Canvas height
      */
     static drawImpressum(ctx, width, height) {
         const centerX = width / 2;
         const centerY = height / 2;
         
-        TextRenderer.drawCenteredText(ctx, 'IMPRINT', centerX, centerY - 150, '36px', 'Raleway', '#ffffff', 'bold');
-        TextRenderer.drawCenteredText(ctx, 'Wraith - A 2D Action Game', centerX, centerY - 100, '20px', 'Raleway', '#ffffff', 'bold');
-        TextRenderer.drawCenteredText(ctx, 'Developed with JavaScript & HTML5 Canvas', centerX, centerY - 70, '16px');
-        TextRenderer.drawCenteredText(ctx, 'by Manuel Giehl', centerX, centerY - 50, '16px');
-        TextRenderer.drawCenteredText(ctx, 'Friedrich-Ebert-Hof 19', centerX, centerY - 30, '16px');
-        TextRenderer.drawCenteredText(ctx, '22763 Hamburg', centerX, centerY - 10, '16px');
-        TextRenderer.drawCenteredText(ctx, '© 2025 - Developed for the Developerakademie', centerX, centerY + 10, '16px');
-        
-        TextRenderer.drawCenteredText(ctx, 'Graphics: craftpix.net', centerX, centerY + 30, '16px');
-        TextRenderer.drawCenteredText(ctx, 'Music: pixabay.com, freesound.org, uppbeat.io', centerX, centerY + 50, '16px');
-       
-        TextRenderer.drawCenteredText(ctx, 'Version 1.0', centerX, centerY + 95, '18px', 'Raleway', '#ffffff', 'bold');
-        TextRenderer.drawCenteredText(ctx, 'Build: 2025.01', centerX, centerY + 120, '18px', 'Raleway', '#ffffff', 'bold');
-        TextRenderer.drawCenteredText(ctx, 'ESC - Back to Main Menu', centerX, height - 50, '16px', 'Raleway', '#cccccc');
+        this.drawImpressumBackground(ctx, centerX, centerY);
+        this.drawImpressumTitle(ctx, centerX, centerY);
+        this.drawImpressumContent(ctx, centerX, centerY);
+        this.drawImpressumBackText(ctx, centerX, height);
     }
+
+    /**
+     * Draws impressum background frame
+     */
+    static drawImpressumBackground(ctx, centerX, centerY) {
+        ctx.save();
+        ctx.fillStyle = 'rgba(10, 15, 25, 0.9)';
+        ctx.fillRect(centerX - 350, centerY - 250, 700, 500);
+        
+        ctx.strokeStyle = '#2a4a6b';
+        ctx.lineWidth = 3;
+        ctx.strokeRect(centerX - 350, centerY - 250, 700, 500);
+        
+        ctx.strokeStyle = '#4a90e2';
+        ctx.lineWidth = 1;
+        ctx.strokeRect(centerX - 348, centerY - 248, 696, 496);
+        ctx.restore();
+    }
+
+    /**
+     * Draws impressum title
+     */
+    static drawImpressumTitle(ctx, centerX, centerY) {
+        ctx.shadowColor = '#4a90e2';
+        ctx.shadowBlur = 10;
+        TextRenderer.drawCenteredText(ctx, 'IMPRINT', centerX, centerY - 180, '36px', 'Raleway', '#ffffff', 'bold');
+        ctx.shadowBlur = 0;
+    }
+
+    /**
+     * Draws impressum content
+     */
+    static drawImpressumContent(ctx, centerX, centerY) {
+        TextRenderer.drawCenteredText(ctx, 'Wraith - A 2D Action Game', centerX, centerY - 120, '20px', 'Raleway', '#ffffff', 'bold');
+        TextRenderer.drawCenteredText(ctx, 'Developed with JavaScript & HTML5 Canvas', centerX, centerY - 90, '16px');
+        TextRenderer.drawCenteredText(ctx, 'by Manuel Giehl', centerX, centerY - 70, '16px');
+        TextRenderer.drawCenteredText(ctx, 'Friedrich-Ebert-Hof 19', centerX, centerY - 50, '16px');
+        TextRenderer.drawCenteredText(ctx, '22763 Hamburg', centerX, centerY - 30, '16px');
+        TextRenderer.drawCenteredText(ctx, '© 2025 - Developed for the Developerakademie', centerX, centerY - 10, '16px');
+        
+        TextRenderer.drawCenteredText(ctx, 'Graphics: craftpix.net', centerX, centerY + 10, '16px');
+        TextRenderer.drawCenteredText(ctx, 'Music: pixabay.com, freesound.org, uppbeat.io', centerX, centerY + 30, '16px');
+       
+        TextRenderer.drawCenteredText(ctx, 'Version 1.0', centerX, centerY + 70, '18px', 'Raleway', '#ffffff', 'bold');
+        TextRenderer.drawCenteredText(ctx, 'Build: 2025.01', centerX, centerY + 95, '18px', 'Raleway', '#ffffff', 'bold');
+    }
+
+    /**
+     * Draws impressum back text
+     */
+    static drawImpressumBackText(ctx, centerX, height) {
+        ctx.shadowColor = '#4a90e2';
+        ctx.shadowBlur = 5;
+        TextRenderer.drawCenteredText(ctx, 'ESC - Back to Main Menu', centerX, height - 50, '16px', 'Raleway', '#ffffff');
+        ctx.shadowBlur = 0;
+    }
+
 }

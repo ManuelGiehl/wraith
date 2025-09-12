@@ -102,7 +102,7 @@ class CollisionSystem {
      * @returns {Object} Spell hitbox coordinates and dimensions
      */
     getSpellHitbox(spell) {
-        const hitboxSize = Math.min(spell.width, spell.height) * 0.6;
+        const hitboxSize = Math.min(spell.width, spell.height) * 0.4;
         return {
             x: spell.x + (spell.width - hitboxSize) / 2,
             y: spell.y + (spell.height - hitboxSize) / 2,
@@ -364,11 +364,11 @@ class CollisionSystem {
      */
     getObjectHitbox(obj) {
         if (obj.type === 'golem') {
-            const hitboxWidth = obj.width * 0.3;
-            const hitboxHeight = obj.height * 0.2;
+            const hitboxWidth = obj.width * 0.35;
+            const hitboxHeight = obj.height * 0.25;
             return {
                 x: obj.x + (obj.width - hitboxWidth) / 2,
-                y: obj.y + (obj.height - hitboxHeight) / 2,
+                y: obj.y + (obj.height - hitboxHeight) / 2 + 5,
                 width: hitboxWidth,
                 height: hitboxHeight
             };
