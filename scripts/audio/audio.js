@@ -229,10 +229,6 @@ class AudioSystem {
      * Draws audio footer
      */
     drawAudioFooter(ctx, centerX, height) {
-        ctx.shadowColor = '#4a90e2';
-        ctx.shadowBlur = 5;
-        this.drawCenteredText(ctx, 'ESC - Back to Main Menu', centerX, height - 50, '16px', 'Raleway', '#ffffff');
-        ctx.shadowBlur = 0;
         ctx.restore();
     }
 

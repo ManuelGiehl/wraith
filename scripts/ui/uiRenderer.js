@@ -130,10 +130,6 @@ class UIRenderer {
      * Draws controls back text
      */
     static drawControlsBackText(ctx, centerX, height) {
-        ctx.shadowColor = '#4a90e2';
-        ctx.shadowBlur = 5;
-        TextRenderer.drawCenteredText(ctx, 'ESC - Back to Main Menu', centerX, height - 50, '16px', 'Raleway', '#ffffff');
-        ctx.shadowBlur = 0;
     }
 
     /**
@@ -204,7 +200,6 @@ class UIRenderer {
     static drawTooltipStartInfo(ctx, centerX, centerY, height) {
         TextRenderer.drawCenteredText(ctx, 'START GAME', centerX, centerY + 170, '24px', 'Raleway', '#00aaff', 'bold');
         TextRenderer.drawCenteredText(ctx, 'PRESS ENTER OR SPACE TO START', centerX, centerY + 210, '18px', 'Raleway', '#cccccc', 'bold');
-        TextRenderer.drawCenteredText(ctx, 'ESC - BACK TO MAIN MENU', centerX, height - 50, '18px', 'Raleway', '#cccccc', 'bold');
     }
 
     /**
@@ -388,10 +383,6 @@ class UIRenderer {
      * Draws impressum back text
      */
     static drawImpressumBackText(ctx, centerX, height) {
-        ctx.shadowColor = '#4a90e2';
-        ctx.shadowBlur = 5;
-        TextRenderer.drawCenteredText(ctx, 'ESC - Back to Main Menu', centerX, height - 50, '16px', 'Raleway', '#ffffff');
-        ctx.shadowBlur = 0;
     }
 
 }
