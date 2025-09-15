@@ -84,9 +84,6 @@ class EventHandler {
             this.handleMouseClick(e);
         });
 
-        this.game.canvas.addEventListener('mousedown', (e) => {
-            this.handleMouseDown(e);
-        });
 
         this.game.canvas.addEventListener('touchstart', (e) => {
             if (e.cancelable) {
@@ -112,18 +109,6 @@ class EventHandler {
             this.game.gameOverScreenSystem.handleMouseClick(e);
         } else if (this.game.isPaused) {
             this.handlePauseScreenClick(e);
-        }
-    }
-
-
-    /**
-     * Handles mouse down events for spell casting
-     * @param {MouseEvent} e - The mouse event
-     * @private
-     */
-    handleMouseDown(e) {
-        if (e.button === 0 && !this.game.wraithSystem.player.isCasting && !this.game.wraithSystem.player.isCastingUltimate) {
-            this.game.wraithSystem.startCasting();
         }
     }
 
