@@ -220,7 +220,7 @@ class GolemSystem {
     handleActiveGolem(golem) {
         const distanceToPlayer = Math.abs(this.game.wraithSystem.player.x - golem.x);
         golem.facingRight = this.game.wraithSystem.player.x > golem.x;
-        const isInRange = distanceToPlayer < 60;
+        const isInRange = distanceToPlayer < 40;
         
         this.handleGolemAttack(golem, isInRange);
         this.handleGolemMovement(golem, distanceToPlayer, isInRange);
@@ -250,7 +250,7 @@ class GolemSystem {
     handleGolemMovement(golem, distanceToPlayer, isInRange) {
         if (golem.isAttacking) golem.currentAnimation = 'attacking';
         else if (isInRange) golem.currentAnimation = 'idle';
-        else if (distanceToPlayer > 60) {
+        else if (distanceToPlayer > 40) {
             golem.x += (this.game.wraithSystem.player.x > golem.x ? 1 : -1) * 1.5;
             golem.currentAnimation = 'walking';
         } else golem.currentAnimation = 'idle';
