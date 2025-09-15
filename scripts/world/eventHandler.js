@@ -66,8 +66,17 @@ class EventHandler {
      */
     setupMouseEvents() {
         this.game.canvas.addEventListener('mousemove', (e) => {
+            this.game.canvas.classList.remove('cursor-pointer');
+            this.game.canvas.classList.add('cursor-default');
+            
             if (this.game.startScreenSystem.isVisible) {
                 this.game.startScreenSystem.handleMouseMove(e);
+            } else if (this.game.endScreenSystem.isVisible) {
+                this.game.endScreenSystem.handleMouseMove(e);
+            } else if (this.game.gameOverScreenSystem.isVisible) {
+                this.game.gameOverScreenSystem.handleMouseMove(e);
+            } else if (this.game.isPaused) {
+                this.handlePauseScreenMouseMove(e);
             }
         });
 
@@ -129,6 +138,21 @@ class EventHandler {
             }
             this.game.startGame();
         });
+    }
+
+    /**
+     * Handles mouse movement in the pause screen
+     * @param {MouseEvent} e - The mouse event
+     * @public
+     */
+    handlePauseScreenMouseMove(e) {
+        const mousePos = this.getMousePosition(e);
+        const buttonBounds = this.getPauseButtonBounds();
+        
+        if (this.isClickOnPauseButton(mousePos, buttonBounds)) {
+            this.game.canvas.classList.remove('cursor-default');
+            this.game.canvas.classList.add('cursor-pointer');
+        }
     }
 
     /**

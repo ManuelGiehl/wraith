@@ -11,7 +11,7 @@ class EndScreenSystem {
         this.buttonAlpha = 0;
         this.animationPhase = 'fade';
         this.animationTimer = 0;
-        this.selectedButton = 0;
+        this.selectedButton = -1;
         this.buttons = ['Restart Game', 'Back to Main Menu'];
         this.lastTouchTime = 0;
         this.touchDebounceDelay = 300;
@@ -36,7 +36,7 @@ class EndScreenSystem {
      */
     show() {
         this.isVisible = true;
-        this.selectedButton = 0;
+        this.selectedButton = -1;
     }
 
     /**
@@ -44,7 +44,7 @@ class EndScreenSystem {
      */
     hide() {
         this.isVisible = false;
-        this.selectedButton = 0;
+        this.selectedButton = -1;
        
         if (this.game.bossRoomSystem) {
             this.game.bossRoomSystem.switchToNormalBackground();
@@ -69,6 +69,44 @@ class EndScreenSystem {
             case 'Escape':
                 this.handleButtonSelect(1);
                 break;
+        }
+    }
+
+    /**
+     * Handles mouse move in end screen
+     */
+    handleMouseMove(e) {
+        if (!this.isVisible) return;
+
+        const rect = this.game.canvas.getBoundingClientRect();
+        const mouseX = e.clientX - rect.left;
+        const mouseY = e.clientY - rect.top;
+        const centerX = this.game.width / 2;
+        const centerY = this.game.height / 2;
+
+        this.selectedButton = -1;
+
+        let isHovering = false;
+        this.buttons.forEach((button, index) => {
+            const y = centerY + 100 + (index * 60);
+            const textWidth = this.game.ctx.measureText(button).width;
+            const padding = 20;
+            
+            const buttonX = centerX - textWidth/2 - padding;
+            const buttonY = y - 25;
+            const buttonWidth = textWidth + padding * 2;
+            const buttonHeight = 50;
+            
+            if (mouseX >= buttonX && mouseX <= buttonX + buttonWidth &&
+                mouseY >= buttonY && mouseY <= buttonY + buttonHeight) {
+                this.selectedButton = index;
+                isHovering = true;
+            }
+        });
+        
+        if (isHovering) {
+            this.game.canvas.classList.remove('cursor-default');
+            this.game.canvas.classList.add('cursor-pointer');
         }
     }
 

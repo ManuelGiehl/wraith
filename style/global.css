@@ -43,6 +43,7 @@ body {
 #gameCanvas {
     display: block;
     background: transparent;
+    cursor: default;
 }
 
 #ui {

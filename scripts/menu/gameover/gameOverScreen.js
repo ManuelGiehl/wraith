@@ -11,7 +11,7 @@ class GameOverScreenSystem {
         this.buttonAlpha = 0;
         this.animationPhase = 'fade';
         this.animationTimer = 0;
-        this.selectedButton = 0;
+        this.selectedButton = -1;
         this.buttons = ['Restart Game', 'Back to Main Menu'];
         this.lastTouchTime = 0;
         this.touchDebounceDelay = 300;
@@ -36,7 +36,7 @@ class GameOverScreenSystem {
      */
     show() {
         this.isVisible = true;
-        this.selectedButton = 0;
+        this.selectedButton = -1;
     }
 
     /**
@@ -44,7 +44,7 @@ class GameOverScreenSystem {
      */
     hide() {
         this.isVisible = false;
-        this.selectedButton = 0;
+        this.selectedButton = -1;
     }
 
     /**
@@ -65,6 +65,33 @@ class GameOverScreenSystem {
             case 'Escape':
                 this.handleButtonSelect(1);
                 break;
+        }
+    }
+
+    /**
+     * Handles mouse move in game over screen
+     */
+    handleMouseMove(e) {
+        if (!this.isVisible) return;
+
+        const mousePos = this.getMousePosition(e);
+        const centerX = this.game.width / 2;
+        const centerY = this.game.height / 2;
+        
+        this.selectedButton = -1;
+        
+        let isHovering = false;
+        this.buttons.forEach((button, index) => {
+            const buttonRect = this.getButtonRect(button, centerX, centerY, index);
+            if (this.isPointInRect(mousePos, buttonRect)) {
+                this.selectedButton = index;
+                isHovering = true;
+            }
+        });
+
+        if (isHovering) {
+            this.game.canvas.classList.remove('cursor-default');
+            this.game.canvas.classList.add('cursor-pointer');
         }
     }
 
